@@ -16,7 +16,7 @@ import fr.silvharm.logica.game.GamesView;
 
 public class GameConfigView extends JPanel {
 	
-	private int tempSecretLength = 5, tempTriesNumber = 5;
+	private int tempMastermind = 7, tempSecretLength = 5, tempTriesNumber = 5;
 	private Game game;
 	
 	
@@ -25,6 +25,7 @@ public class GameConfigView extends JPanel {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
 		JLabel gameLabel = new JLabel(game.getName());
+		gameLabel.setAlignmentX(CENTER_ALIGNMENT);
 		this.add(gameLabel);
 		
 		this.add(addModes());
@@ -73,28 +74,69 @@ public class GameConfigView extends JPanel {
 		JPanel options = new JPanel();
 		options.setLayout(new BoxLayout(options, BoxLayout.PAGE_AXIS));
 		
+		
 		JLabel optGeLabel = new JLabel("Options:");
+		optGeLabel.setAlignmentX(CENTER_ALIGNMENT);
 		options.add(optGeLabel);
+		
 		
 		JPanel caseSecretP = new JPanel();
 		
 		JLabel caseSecretL = new JLabel("Longueur de la solution:");
 		caseSecretP.add(caseSecretL);
+		
 		JTextField caseSecretF = new JTextField();
 		caseSecretF.setColumns(3);
+		caseSecretF.setText(Integer.toString(tempSecretLength));
 		caseSecretP.add(caseSecretF);
 		
 		options.add(caseSecretP);
+		
 		
 		JPanel essaiP = new JPanel();
 		
 		JLabel essaiL = new JLabel("Nombre d'essais:");
 		essaiP.add(essaiL);
+		
 		JTextField essaiF = new JTextField();
 		essaiF.setColumns(3);
+		essaiF.setText(Integer.toString(tempTriesNumber));
 		essaiP.add(essaiF);
 		
+		
 		options.add(essaiP);
+		
+		
+		// Mastermind specific
+		if (game.getName().equals("Mastermind")) {
+			JLabel master = new JLabel("Option Mastermind:");
+			master.setAlignmentX(CENTER_ALIGNMENT);
+			options.add(master);
+			
+			
+			JPanel subMastermind = new JPanel();
+			
+			JLabel masL = new JLabel("Nombre de couleurs:");
+			subMastermind.add(masL);
+			
+			JComboBox<Byte> masC = new JComboBox<Byte>();
+			for (Byte i = 4; i <= 10; i++) {
+				masC.addItem(i);
+			}
+			
+			Byte tempMas = (byte) tempMastermind;
+			if (tempMas < 4 || 10 < tempMas) {
+				masC.setSelectedIndex(0);
+			}
+			else {
+				masC.setSelectedIndex(tempMas - 4);
+			}
+			
+			subMastermind.add(masC);
+			
+			options.add(subMastermind);
+		}
+		
 		
 		return options;
 	}
