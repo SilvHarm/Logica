@@ -17,6 +17,8 @@ import fr.silvharm.logica.game.GamesView;
 public class GameConfigView extends JPanel {
 	
 	private int tempMastermind = 7, tempSecretLength = 5, tempTriesNumber = 5;
+	private JComboBox<Byte> masC;
+	JTextField caseSecretF, essaiF;
 	private Game game;
 	
 	
@@ -42,6 +44,10 @@ public class GameConfigView extends JPanel {
 		JButton start = new JButton("Commencer à jouer");
 		start.addActionListener(new startGameListener());
 		buttons.add(start);
+		
+		JButton defaultConfig = new JButton("Reset");
+		defaultConfig.addActionListener(new defaultConfigListener());
+		buttons.add(defaultConfig);
 		
 		JButton retour = new JButton("Retour");
 		retour.addActionListener(new ActionListener() {
@@ -75,17 +81,12 @@ public class GameConfigView extends JPanel {
 		options.setLayout(new BoxLayout(options, BoxLayout.PAGE_AXIS));
 		
 		
-		JLabel optGeLabel = new JLabel("Options:");
-		optGeLabel.setAlignmentX(CENTER_ALIGNMENT);
-		options.add(optGeLabel);
-		
-		
 		JPanel caseSecretP = new JPanel();
 		
 		JLabel caseSecretL = new JLabel("Longueur de la solution:");
 		caseSecretP.add(caseSecretL);
 		
-		JTextField caseSecretF = new JTextField();
+		caseSecretF = new JTextField();
 		caseSecretF.setColumns(3);
 		caseSecretF.setText(Integer.toString(tempSecretLength));
 		caseSecretP.add(caseSecretF);
@@ -98,7 +99,7 @@ public class GameConfigView extends JPanel {
 		JLabel essaiL = new JLabel("Nombre d'essais:");
 		essaiP.add(essaiL);
 		
-		JTextField essaiF = new JTextField();
+		essaiF = new JTextField();
 		essaiF.setColumns(3);
 		essaiF.setText(Integer.toString(tempTriesNumber));
 		essaiP.add(essaiF);
@@ -107,19 +108,14 @@ public class GameConfigView extends JPanel {
 		options.add(essaiP);
 		
 		
-		// Mastermind specific
+		// Mastermind
 		if (game.getName().equals("Mastermind")) {
-			JLabel master = new JLabel("Option Mastermind:");
-			master.setAlignmentX(CENTER_ALIGNMENT);
-			options.add(master);
-			
-			
 			JPanel subMastermind = new JPanel();
 			
 			JLabel masL = new JLabel("Nombre de couleurs:");
 			subMastermind.add(masL);
 			
-			JComboBox<Byte> masC = new JComboBox<Byte>();
+			masC = new JComboBox<Byte>();
 			for (Byte i = 4; i <= 10; i++) {
 				masC.addItem(i);
 			}
@@ -142,9 +138,29 @@ public class GameConfigView extends JPanel {
 	}
 	
 	
+	class defaultConfigListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			caseSecretF.setText("5");
+			
+			essaiF.setText("8");
+			
+			if (game.getName().equals("Mastermind")) {
+				masC.setSelectedIndex(0);
+			}
+			
+			// devra egalement sauvegarder les changements dans config.properties
+		}
+		
+	}
+	
+	
 	class startGameListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
+			// devra sauvegarder les paramètres dans config.properties
+			
+			
 			game.setSecretLength(tempSecretLength);
 			game.setTriesNumber(tempTriesNumber);
 			
