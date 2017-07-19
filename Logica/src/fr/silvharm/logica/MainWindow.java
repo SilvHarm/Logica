@@ -7,7 +7,10 @@ import fr.silvharm.logica.game.GamesView;
 
 public class MainWindow extends JFrame {
 	
-	public MainWindow() {
+	private static MainWindow window = new MainWindow();
+	
+	
+	private MainWindow() {
 		this.setTitle("Logica");
 		this.setSize(600, 400);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -16,6 +19,11 @@ public class MainWindow extends JFrame {
 		this.setView(new GamesView());
 		
 		this.setVisible(true);
+	}
+	
+	
+	public static MainWindow getMainWindow() {
+		return window;
 	}
 	
 	

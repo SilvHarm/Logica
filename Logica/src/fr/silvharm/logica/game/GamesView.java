@@ -1,20 +1,20 @@
 package fr.silvharm.logica.game;
 
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import fr.silvharm.logica.Main;
-import fr.silvharm.logica.config.GameConfig;
+import fr.silvharm.logica.MainWindow;
+import fr.silvharm.logica.config.GameConfigView;
 
 public class GamesView extends JPanel {
 	
 	public GamesView() {
-		FlowLayout layout = new FlowLayout();
-		this.setLayout(layout);
+		JPanel pan = new JPanel();
+		pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
 		
 		
 		GamesListener gamesList = new GamesListener();
@@ -22,25 +22,37 @@ public class GamesView extends JPanel {
 		JButton mastermind = new JButton("Mastermind");
 		mastermind.setName("mastermind");
 		mastermind.addActionListener(gamesList);
+		pan.add(mastermind);
 		
 		JButton recherche = new JButton("Recherche");
 		recherche.setName("recherche");
 		recherche.addActionListener(gamesList);
+		pan.add(recherche);
 		
 		JButton exit = new JButton("Quitter");
 		exit.addActionListener(new ExitListener());
+		pan.add(exit);
 		
 		
-		this.add(mastermind);
-		this.add(recherche);
-		this.add(exit);
+		this.add(pan);
 	}
 	
 	
 	class GamesListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
-			Main.mainWindow.setView(new GameConfig(new TestGame("Test")));
+			Game game = null;
+			
+			switch (((JButton) e.getSource()).getName()) {
+				case "mastermind":
+					game = new TestGame("Mastermind");
+					break;
+				case "recherche":
+					game = new TestGame("Recherche");
+					break;
+			}
+			
+			MainWindow.getMainWindow().setView(new GameConfigView(game));
 		}
 	}
 	
