@@ -15,6 +15,6 @@ public enum GameMode {
 	
 	
 	public String toString() {
-		return this.name();
+		return this.name;
 	}
 }

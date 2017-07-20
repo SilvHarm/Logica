@@ -70,16 +70,22 @@ public class GameConfigView extends JPanel {
 	
 	
 	private JPanel addModes() {
-		JPanel mode = new JPanel();
+		JPanel modePanel = new JPanel();
 		
 		JLabel modeLabel = new JLabel("Mode de jeu:");
-		mode.add(modeLabel);
+		modePanel.add(modeLabel);
 		
 		GameMode[] gameMode = GameMode.values();
-		JComboBox<GameMode> modeBox = new JComboBox<GameMode>(gameMode);
-		mode.add(modeBox);
 		
-		return mode;
+		String[] gameString = new String[gameMode.length];
+		for (int i = 0; i < gameMode.length; i++) {
+			gameString[i] = gameMode[i].toString();
+		}
+		
+		JComboBox<String> modeBox = new JComboBox<String>(gameString);
+		modePanel.add(modeBox);
+		
+		return modePanel;
 	}
 	
 	
