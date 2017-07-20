@@ -2,6 +2,9 @@ package fr.silvharm.logica.config;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,14 +19,18 @@ import fr.silvharm.logica.game.GamesView;
 
 public class GameConfigView extends JPanel {
 	
-	private int tempMastermind = 7, tempSecretLength = 5, tempTriesNumber = 5;
+	private Boolean hasChanged = false;
+	private Game game;
 	private JComboBox<Byte> masC;
 	JTextField caseSecretF, essaiF;
-	private Game game;
+	private List<String[]> list;
+	private Properties properties;
 	
 	
 	public GameConfigView(Game gameG) {
 		game = gameG;
+		properties = PropertiesHandler.getProperties();
+		
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
 		JLabel gameLabel = new JLabel(game.getName());
@@ -88,7 +95,7 @@ public class GameConfigView extends JPanel {
 		
 		caseSecretF = new JTextField();
 		caseSecretF.setColumns(3);
-		caseSecretF.setText(Integer.toString(tempSecretLength));
+		caseSecretF.setText(properties.getProperty("secretCase"));
 		caseSecretP.add(caseSecretF);
 		
 		options.add(caseSecretP);
@@ -101,7 +108,7 @@ public class GameConfigView extends JPanel {
 		
 		essaiF = new JTextField();
 		essaiF.setColumns(3);
-		essaiF.setText(Integer.toString(tempTriesNumber));
+		essaiF.setText(properties.getProperty("triesNumber"));
 		essaiP.add(essaiF);
 		
 		
@@ -120,7 +127,7 @@ public class GameConfigView extends JPanel {
 				masC.addItem(i);
 			}
 			
-			Byte tempMas = (byte) tempMastermind;
+			Byte tempMas = Byte.valueOf(properties.getProperty("colorNumber"));
 			if (tempMas < 4 || 10 < tempMas) {
 				masC.setSelectedIndex(0);
 			}
@@ -138,6 +145,25 @@ public class GameConfigView extends JPanel {
 	}
 	
 	
+	private void addToList(String[] str) {
+		if (list == null) {
+			list = new ArrayList<String[]>();
+		}
+		
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i)[0].equals(str[0])) {
+				list.get(i)[1] = str[1];
+				break;
+			}
+			
+			if (i == (list.size() - 1)) {
+				list.add(str);
+				break;
+			}
+		}
+	}
+	
+	
 	class defaultConfigListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
@@ -146,26 +172,29 @@ public class GameConfigView extends JPanel {
 			essaiF.setText("8");
 			
 			if (game.getName().equals("Mastermind")) {
-				masC.setSelectedIndex(0);
+				masC.setSelectedIndex(1);
 			}
 			
-			// devra egalement sauvegarder les changements dans config.properties
+			hasChanged = true;
 		}
-		
 	}
 	
 	
 	class startGameListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
-			// devra sauvegarder les paramètres dans config.properties
+			if (hasChanged) {
+				PropertiesHandler.updateProperties(properties, list);
+			}
 			
+			game.setSecretLength(Byte.valueOf(properties.getProperty("secretCase")));
+			game.setTriesNumber(Byte.valueOf(properties.getProperty("triesNumber")));
 			
-			game.setSecretLength(tempSecretLength);
-			game.setTriesNumber(tempTriesNumber);
+			if (game.getName().equals("Mastermind")) {
+				
+			}
 			
 			game.startGame();
 		}
-		
 	}
 }

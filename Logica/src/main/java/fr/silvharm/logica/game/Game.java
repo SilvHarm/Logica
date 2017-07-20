@@ -4,8 +4,8 @@ import javax.swing.JPanel;
 
 public abstract class Game extends JPanel {
 	
+	private Byte secretLength, triesNumber;
 	private String name;
-	private int secretLength, triesNumber;
 	
 	
 	protected Game(String nameG) {
@@ -31,12 +31,12 @@ public abstract class Game extends JPanel {
 	}
 	
 	
-	public int getSecretLength() {
+	public Byte getSecretLength() {
 		return this.secretLength;
 	}
 	
 	
-	public int getTriesNumber() {
+	public Byte getTriesNumber() {
 		return this.triesNumber;
 	}
 	
@@ -44,12 +44,12 @@ public abstract class Game extends JPanel {
 	/*
 	 * Setters
 	 */
-	public void setSecretLength(int i) {
-		this.secretLength = i;
+	public void setSecretLength(Byte b) {
+		this.secretLength = b;
 	}
 	
 	
-	public void setTriesNumber(int i) {
-		this.triesNumber = i;
+	public void setTriesNumber(Byte b) {
+		this.triesNumber = b;
 	}
 }
