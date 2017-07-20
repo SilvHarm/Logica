@@ -2,8 +2,6 @@ package fr.silvharm.logica.config;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import javax.swing.BoxLayout;
@@ -12,6 +10,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import fr.silvharm.logica.MainWindow;
 import fr.silvharm.logica.game.Game;
@@ -22,8 +22,7 @@ public class GameConfigView extends JPanel {
 	private Boolean hasChanged = false;
 	private Game game;
 	private JComboBox<Byte> masC;
-	JTextField caseSecretF, essaiF;
-	private List<String[]> list;
+	JTextField caseSecretF, triesF;
 	private Properties properties;
 	
 	
@@ -53,7 +52,7 @@ public class GameConfigView extends JPanel {
 		buttons.add(start);
 		
 		JButton defaultConfig = new JButton("Reset");
-		defaultConfig.addActionListener(new defaultConfigListener());
+		defaultConfig.addActionListener(new DefaultConfigListener());
 		buttons.add(defaultConfig);
 		
 		JButton retour = new JButton("Retour");
@@ -107,18 +106,20 @@ public class GameConfigView extends JPanel {
 		options.add(caseSecretP);
 		
 		
-		JPanel essaiP = new JPanel();
+		JPanel triesP = new JPanel();
 		
-		JLabel essaiL = new JLabel("Nombre d'essais:");
-		essaiP.add(essaiL);
+		JLabel triesL = new JLabel("Nombre d'essais:");
+		triesP.add(triesL);
 		
-		essaiF = new JTextField();
-		essaiF.setColumns(3);
-		essaiF.setText(properties.getProperty("triesNumber"));
-		essaiP.add(essaiF);
+		triesF = new JTextField();
+		triesF.setColumns(3);
+		triesF.setText(properties.getProperty("triesNumber"));
+		triesF.getDocument().addDocumentListener(new TriesListener());
+		
+		triesP.add(triesF);
 		
 		
-		options.add(essaiP);
+		options.add(triesP);
 		
 		
 		// Mastermind
@@ -133,13 +134,22 @@ public class GameConfigView extends JPanel {
 				masC.addItem(i);
 			}
 			
-			Byte tempMas = Byte.valueOf(properties.getProperty("colorNumber"));
+			Byte tempMas;
+			try {
+				tempMas = Byte.valueOf(properties.getProperty("colorNumber"));
+			}
+			catch (NumberFormatException e) {
+				tempMas = 4;
+			}
+			
 			if (tempMas < 4 || 10 < tempMas) {
 				masC.setSelectedIndex(0);
 			}
 			else {
 				masC.setSelectedIndex(tempMas - 4);
 			}
+			
+			masC.addActionListener(new ModeListener());
 			
 			subMastermind.add(masC);
 			
@@ -151,38 +161,54 @@ public class GameConfigView extends JPanel {
 	}
 	
 	
-	private void addToList(String[] str) {
-		if (list == null) {
-			list = new ArrayList<String[]>();
-		}
+	private void updateProperties(String propNam, String propValue) {
+		hasChanged = true;
 		
-		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i)[0].equals(str[0])) {
-				list.get(i)[1] = str[1];
-				break;
-			}
+		properties.setProperty(propNam, propValue);
+	}
+	
+	
+	/*****************************
+	 * Listeners
+	 ****************************/
+	class DefaultConfigListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			caseSecretF.setText(PropertiesHandler.defCaseSecret);
 			
-			if (i == (list.size() - 1)) {
-				list.add(str);
-				break;
+			triesF.setText(PropertiesHandler.defTriesNumber);
+			
+			if (game.getName().equals("Mastermind")) {
+				masC.setSelectedIndex(Byte.valueOf(PropertiesHandler.defColorNumber) - 4);
 			}
 		}
 	}
 	
 	
-	class defaultConfigListener implements ActionListener {
+	class ModeListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
-			caseSecretF.setText("5");
-			
-			essaiF.setText("8");
-			
-			if (game.getName().equals("Mastermind")) {
-				masC.setSelectedIndex(1);
-			}
-			
-			hasChanged = true;
+			updateProperties("colorNumber", masC.getSelectedItem().toString());
 		}
+	}
+	
+	
+	class TriesListener implements DocumentListener {
+		
+		public void changedUpdate(DocumentEvent doc) {
+			
+		}
+		
+		
+		public void insertUpdate(DocumentEvent doc) {
+			
+		}
+		
+		
+		public void removeUpdate(DocumentEvent doc) {
+			
+		}
+		
 	}
 	
 	
@@ -190,7 +216,9 @@ public class GameConfigView extends JPanel {
 		
 		public void actionPerformed(ActionEvent e) {
 			if (hasChanged) {
-				PropertiesHandler.updateProperties(properties, list);
+				PropertiesHandler.updateProperties(properties);
+				
+				hasChanged = false;
 			}
 			
 			game.setSecretLength(Byte.valueOf(properties.getProperty("secretCase")));

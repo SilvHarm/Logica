@@ -4,30 +4,21 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Properties;
 
 public class PropertiesHandler {
+	
+	public static String defColorNumber = "4", defCaseSecret = "5", defTriesNumber = "8";
 	
 	
 	private static void createProperties() {
 		Properties properties = new Properties();
 		
-		File file = new File("bin/config/config.properties");
+		properties.setProperty("triesNumber", defTriesNumber);
+		properties.setProperty("secretCase", defCaseSecret);
+		properties.setProperty("colorNumber", defColorNumber);
 		
-		try (FileWriter writer = new FileWriter(file)) {
-			properties.setProperty("triesNumber", "8");
-			properties.setProperty("secretCase", "5");
-			properties.store(writer, "General");
-			
-			properties.clear();
-			
-			properties.setProperty("colorNumber", "4");
-			properties.store(writer, "\n" + "Mastermind");
-		}
-		catch (IOException e) {
-			e.getMessage();
-		}
+		updateProperties(properties);
 	}
 	
 	
@@ -52,10 +43,14 @@ public class PropertiesHandler {
 	}
 	
 	
-	public static void updateProperties(Properties properties, List<String[]> list) {
-		for (String[] str : list) {
-			properties.setProperty(str[0], str[1]);
+	public static void updateProperties(Properties properties) {
+		File file = new File("bin/config/config.properties");
+		
+		try (FileWriter writer = new FileWriter(file)) {
+			properties.store(writer, "Options");
+		}
+		catch (IOException e) {
+			e.getMessage();
 		}
 	}
-	
 }
