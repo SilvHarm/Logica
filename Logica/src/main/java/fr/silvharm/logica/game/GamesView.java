@@ -1,32 +1,20 @@
-package fr.silvharm.logica;
+package fr.silvharm.logica.game;
 
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class MainWindow extends JFrame {
+import fr.silvharm.logica.MainWindow;
+import fr.silvharm.logica.config.GameConfigView;
+
+public class GamesView extends JPanel {
 	
-	public MainWindow() {
-		this.setTitle("Logica");
-		this.setSize(600, 400);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-		
-		gameChooseView();
-		
-		this.setVisible(true);
-	}
-	
-	
-	public void gameChooseView() {
-		JPanel view = new JPanel();
-		FlowLayout layout = new FlowLayout();
-		
-		view.setLayout(layout);
+	public GamesView() {
+		JPanel pan = new JPanel();
+		pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
 		
 		
 		GamesListener gamesList = new GamesListener();
@@ -34,27 +22,37 @@ public class MainWindow extends JFrame {
 		JButton mastermind = new JButton("Mastermind");
 		mastermind.setName("mastermind");
 		mastermind.addActionListener(gamesList);
+		pan.add(mastermind);
 		
 		JButton recherche = new JButton("Recherche");
 		recherche.setName("recherche");
 		recherche.addActionListener(gamesList);
+		pan.add(recherche);
 		
 		JButton exit = new JButton("Quitter");
 		exit.addActionListener(new ExitListener());
+		pan.add(exit);
 		
 		
-		view.add(mastermind);
-		view.add(recherche);
-		view.add(exit);
-		
-		this.setContentPane(view);
+		this.add(pan);
 	}
 	
 	
 	class GamesListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
+			Game game = null;
 			
+			switch (((JButton) e.getSource()).getName()) {
+				case "mastermind":
+					game = new TestGame("Mastermind");
+					break;
+				case "recherche":
+					game = new TestGame("Recherche");
+					break;
+			}
+			
+			MainWindow.getMainWindow().setView(new GameConfigView(game));
 		}
 	}
 	
