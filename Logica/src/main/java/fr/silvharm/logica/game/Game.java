@@ -12,7 +12,7 @@ public abstract class Game extends JPanel {
 	protected Byte squareSecret, triesNumber, triesRemaining;
 	protected char[] solutionTab;
 	protected JPanel gamePanel;
-	protected String name, solution;
+	protected String answer = "", name, solution;
 	
 	
 	protected Game() {
@@ -21,7 +21,7 @@ public abstract class Game extends JPanel {
 	}
 	
 	
-	protected void calculSolution()	{
+	protected void calculSolution() {
 		
 	}
 	
