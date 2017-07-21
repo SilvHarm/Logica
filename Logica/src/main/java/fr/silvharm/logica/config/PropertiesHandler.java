@@ -8,15 +8,13 @@ import java.util.Properties;
 
 public class PropertiesHandler {
 	
-	public static String defColorNumber = "4", defCaseSecret = "5", defTriesNumber = "8";
-	
 	
 	private static void createProperties() {
 		Properties properties = new Properties();
 		
-		properties.setProperty("triesNumber", defTriesNumber);
-		properties.setProperty("secretCase", defCaseSecret);
-		properties.setProperty("colorNumber", defColorNumber);
+		properties.setProperty(PropertiesEnum.TRIESNUMBER.getKeyName(), PropertiesEnum.TRIESNUMBER.getDefaultValue());
+		properties.setProperty(PropertiesEnum.SQUARESECRET.getKeyName(), PropertiesEnum.SQUARESECRET.getDefaultValue());
+		properties.setProperty(PropertiesEnum.COLORNUMBER.getKeyName(), PropertiesEnum.COLORNUMBER.getDefaultValue());
 		
 		updateProperties(properties);
 	}

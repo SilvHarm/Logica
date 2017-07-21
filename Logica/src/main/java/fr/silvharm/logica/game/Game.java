@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 
 public abstract class Game extends JPanel {
 	
+	private Byte squareSecret, triesRemaining;
 	private String name;
 	
 	
@@ -29,7 +30,7 @@ public abstract class Game extends JPanel {
 	}
 	
 	
-	public void updateGame(Properties properties) {
+	protected void updateGame(Properties properties) {
 		
 	}
 	
@@ -38,6 +39,6 @@ public abstract class Game extends JPanel {
 	 * Getters
 	 */
 	public String getName() {
-		return this.name;
+		return name;
 	}
 }

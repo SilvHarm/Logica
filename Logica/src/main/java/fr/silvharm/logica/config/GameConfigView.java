@@ -20,7 +20,7 @@ public class GameConfigView extends JPanel {
 	private Boolean hasChanged = false;
 	private Game game;
 	private JComboBox<Byte> masC;
-	JTextField caseSecretF, triesF;
+	JTextField squareSecretF, triesF;
 	private Properties properties;
 	
 	
@@ -91,17 +91,17 @@ public class GameConfigView extends JPanel {
 		options.setLayout(new BoxLayout(options, BoxLayout.PAGE_AXIS));
 		
 		
-		JPanel caseSecretP = new JPanel();
+		JPanel squareSecretP = new JPanel();
 		
-		JLabel caseSecretL = new JLabel("Longueur de la solution:");
-		caseSecretP.add(caseSecretL);
+		JLabel squareSecretL = new JLabel("Longueur de la solution:");
+		squareSecretP.add(squareSecretL);
 		
-		caseSecretF = new JTextField();
-		caseSecretF.setColumns(3);
-		caseSecretF.setText(properties.getProperty("secretCase"));
-		caseSecretP.add(caseSecretF);
+		squareSecretF = new JTextField();
+		squareSecretF.setColumns(3);
+		squareSecretF.setText(properties.getProperty(PropertiesEnum.SQUARESECRET.getKeyName()));
+		squareSecretP.add(squareSecretF);
 		
-		options.add(caseSecretP);
+		options.add(squareSecretP);
 		
 		
 		JPanel triesP = new JPanel();
@@ -111,7 +111,7 @@ public class GameConfigView extends JPanel {
 		
 		triesF = new JTextField();
 		triesF.setColumns(3);
-		triesF.setText(properties.getProperty("triesNumber"));
+		triesF.setText(properties.getProperty(PropertiesEnum.TRIESNUMBER.getKeyName()));
 		
 		triesP.add(triesF);
 		
@@ -131,7 +131,7 @@ public class GameConfigView extends JPanel {
 				masC.addItem(i);
 			}
 			
-			Byte tempMas = Byte.valueOf(properties.getProperty("colorNumber"));
+			Byte tempMas = Byte.valueOf(properties.getProperty(PropertiesEnum.COLORNUMBER.getKeyName()));
 			if (tempMas < 4 || 10 < tempMas) {
 				masC.setSelectedIndex(0);
 			}
@@ -164,12 +164,12 @@ public class GameConfigView extends JPanel {
 	class DefaultConfigListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
-			caseSecretF.setText(PropertiesHandler.defCaseSecret);
+			squareSecretF.setText(PropertiesEnum.SQUARESECRET.getDefaultValue());
 			
-			triesF.setText(PropertiesHandler.defTriesNumber);
+			triesF.setText(PropertiesEnum.TRIESNUMBER.getDefaultValue());
 			
 			if (game.getName().equals("Mastermind")) {
-				masC.setSelectedIndex(Byte.valueOf(PropertiesHandler.defColorNumber) - 4);
+				masC.setSelectedIndex(Byte.valueOf(PropertiesEnum.COLORNUMBER.getDefaultValue()) - 4);
 			}
 		}
 	}
@@ -178,7 +178,7 @@ public class GameConfigView extends JPanel {
 	class ModeListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
-			updateProperties("colorNumber", masC.getSelectedItem().toString());
+			updateProperties(PropertiesEnum.COLORNUMBER.getKeyName(), masC.getSelectedItem().toString());
 		}
 	}
 	
