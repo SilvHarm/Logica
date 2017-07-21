@@ -10,8 +10,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import fr.silvharm.logica.MainWindow;
 import fr.silvharm.logica.game.Game;
@@ -114,7 +112,6 @@ public class GameConfigView extends JPanel {
 		triesF = new JTextField();
 		triesF.setColumns(3);
 		triesF.setText(properties.getProperty("triesNumber"));
-		triesF.getDocument().addDocumentListener(new TriesListener());
 		
 		triesP.add(triesF);
 		
@@ -134,14 +131,7 @@ public class GameConfigView extends JPanel {
 				masC.addItem(i);
 			}
 			
-			Byte tempMas;
-			try {
-				tempMas = Byte.valueOf(properties.getProperty("colorNumber"));
-			}
-			catch (NumberFormatException e) {
-				tempMas = 4;
-			}
-			
+			Byte tempMas = Byte.valueOf(properties.getProperty("colorNumber"));
 			if (tempMas < 4 || 10 < tempMas) {
 				masC.setSelectedIndex(0);
 			}
@@ -190,25 +180,6 @@ public class GameConfigView extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			updateProperties("colorNumber", masC.getSelectedItem().toString());
 		}
-	}
-	
-	
-	class TriesListener implements DocumentListener {
-		
-		public void changedUpdate(DocumentEvent doc) {
-			
-		}
-		
-		
-		public void insertUpdate(DocumentEvent doc) {
-			
-		}
-		
-		
-		public void removeUpdate(DocumentEvent doc) {
-			
-		}
-		
 	}
 	
 	
