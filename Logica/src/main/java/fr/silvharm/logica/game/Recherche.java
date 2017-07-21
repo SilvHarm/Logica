@@ -1,16 +1,22 @@
 package fr.silvharm.logica.game;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+import fr.silvharm.logica.MainWindow;
+import fr.silvharm.logica.config.GameConfigView;
+
 public class Recherche extends Game {
 	
-	public Recherche(String name) {
-		super(name);
+	public Recherche() {
+		this.name = "Recherche";
 	}
 	
 	
@@ -38,7 +44,27 @@ public class Recherche extends Game {
 		}
 		
 		gamePanel.add(boxPanel);
+		
+		
+		JPanel butPanel = new JPanel();
+		
+		JButton verBut = new JButton("Vérifier");
+		verBut.addActionListener(null);
+		butPanel.add(verBut);
+		
+		JButton backBut = new JButton("Retour");
+		backBut.addActionListener(null);
+		butPanel.add(backBut);
+		
+		gamePanel.add(butPanel);
 	}
 	
 	
+	class BackListener implements ActionListener	{
+
+		public void actionPerformed(ActionEvent arg0) {
+			MainWindow.getMainWindow().setView(new GameConfigView(new Recherche()));
+		}
+		
+	}
 }

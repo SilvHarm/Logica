@@ -15,9 +15,7 @@ public abstract class Game extends JPanel {
 	protected String name, solution;
 	
 	
-	protected Game(String name) {
-		this.name = name;
-		
+	protected Game() {
 		this.gamePanel = new JPanel();
 		this.add(gamePanel);
 	}
