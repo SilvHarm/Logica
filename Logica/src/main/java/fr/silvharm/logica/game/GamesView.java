@@ -45,7 +45,7 @@ public class GamesView extends JPanel {
 			
 			switch (((JButton) e.getSource()).getName()) {
 				case "mastermind":
-					//game = new Mastermind("Mastermind");
+					game = new Mastermind("Mastermind");
 					break;
 				case "recherche":
 					game = new Recherche("Recherche");
