@@ -1,10 +1,11 @@
 package fr.silvharm.logica.game;
 
+import java.util.Properties;
+
 import javax.swing.JPanel;
 
 public abstract class Game extends JPanel {
 	
-	private Byte secretLength, triesNumber;
 	private String name;
 	
 	
@@ -13,12 +14,22 @@ public abstract class Game extends JPanel {
 	}
 	
 	
-	public void endGame() {
+	protected void endGame() {
 		
 	}
 	
 	
-	public void startGame() {
+	public void launchGame(Properties properties) {
+		
+	}
+	
+	
+	protected void startGame() {
+		
+	}
+	
+	
+	public void updateGame(Properties properties) {
 		
 	}
 	
@@ -28,28 +39,5 @@ public abstract class Game extends JPanel {
 	 */
 	public String getName() {
 		return this.name;
-	}
-	
-	
-	public Byte getSecretLength() {
-		return this.secretLength;
-	}
-	
-	
-	public Byte getTriesNumber() {
-		return this.triesNumber;
-	}
-	
-	
-	/*
-	 * Setters
-	 */
-	public void setSecretLength(Byte b) {
-		this.secretLength = b;
-	}
-	
-	
-	public void setTriesNumber(Byte b) {
-		this.triesNumber = b;
 	}
 }

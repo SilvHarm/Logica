@@ -46,7 +46,7 @@ public class GameConfigView extends JPanel {
 		JPanel buttons = new JPanel();
 		
 		JButton start = new JButton("Commencer à jouer");
-		start.addActionListener(new startGameListener());
+		start.addActionListener(new LaunchGameListener());
 		buttons.add(start);
 		
 		JButton defaultConfig = new JButton("Reset");
@@ -183,7 +183,7 @@ public class GameConfigView extends JPanel {
 	}
 	
 	
-	class startGameListener implements ActionListener {
+	class LaunchGameListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
 			if (hasChanged) {
@@ -192,14 +192,7 @@ public class GameConfigView extends JPanel {
 				hasChanged = false;
 			}
 			
-			game.setSecretLength(Byte.valueOf(properties.getProperty("secretCase")));
-			game.setTriesNumber(Byte.valueOf(properties.getProperty("triesNumber")));
-			
-			if (game.getName().equals("Mastermind")) {
-				
-			}
-			
-			game.startGame();
+			game.launchGame(properties);
 		}
 	}
 }
