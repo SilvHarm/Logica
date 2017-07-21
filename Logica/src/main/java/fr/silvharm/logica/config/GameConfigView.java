@@ -208,7 +208,7 @@ public class GameConfigView extends JPanel {
 				hasChanged = false;
 			}
 			
-			game.launchGame(properties);
+			Game.launchGame(game, properties);
 		}
 	}
 }

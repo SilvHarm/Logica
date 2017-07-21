@@ -33,19 +33,19 @@ public abstract class Game extends JPanel {
 	}
 	
 	
-	public void launchGame(Properties properties) {
-		this.updateGameConfig(properties);
+	public static void launchGame(Game game, Properties properties) {
+		game.updateGameConfig(properties);
 		
-		this.calculSolution();
+		game.calculSolution();
 		
-		this.updateGamePanel();
+		game.updateGamePanel();
 		
-		this.startGame();
+		game.startGame();
 	}
 	
 	
 	protected void startGame() {
-		MainWindow.getMainWindow().add(this);
+		MainWindow.getMainWindow().setView(this);
 	}
 	
 	
