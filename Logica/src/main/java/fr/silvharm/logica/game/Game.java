@@ -4,13 +4,27 @@ import java.util.Properties;
 
 import javax.swing.JPanel;
 
+import fr.silvharm.logica.MainWindow;
+import fr.silvharm.logica.config.PropertiesEnum;
+
 public abstract class Game extends JPanel {
 	
-	private String name;
+	protected Byte squareSecret, triesNumber, triesRemaining;
+	protected char[] solutionTab;
+	protected JPanel gamePanel;
+	protected String name, solution;
 	
 	
-	protected Game(String nameG) {
-		this.name = nameG;
+	protected Game(String name) {
+		this.name = name;
+		
+		this.gamePanel = new JPanel();
+		this.add(gamePanel);
+	}
+	
+	
+	protected void calculSolution()	{
+		
 	}
 	
 	
@@ -20,16 +34,30 @@ public abstract class Game extends JPanel {
 	
 	
 	public void launchGame(Properties properties) {
+		this.updateGameConfig(properties);
 		
+		this.calculSolution();
+		
+		this.updateGamePanel();
+		
+		this.startGame();
 	}
 	
 	
 	protected void startGame() {
-		
+		MainWindow.getMainWindow().add(this);
 	}
 	
 	
-	public void updateGame(Properties properties) {
+	protected void updateGameConfig(Properties properties) {
+		this.squareSecret = Byte.valueOf(properties.getProperty(PropertiesEnum.SQUARESECRET.getKeyName()));
+		
+		this.triesNumber = Byte.valueOf(properties.getProperty(PropertiesEnum.SQUARESECRET.getKeyName()));
+		this.triesRemaining = triesNumber;
+	}
+	
+	
+	protected void updateGamePanel() {
 		
 	}
 	
@@ -38,6 +66,6 @@ public abstract class Game extends JPanel {
 	 * Getters
 	 */
 	public String getName() {
-		return this.name;
+		return name;
 	}
 }
