@@ -20,6 +20,7 @@ public class GameConfigView extends JPanel {
 	private Boolean hasChanged = false;
 	private Game game;
 	private JComboBox<Byte> masC;
+	private JComboBox<GameMode> modeBox;
 	JTextField squareSecretF, triesF;
 	private Properties properties;
 	
@@ -73,16 +74,47 @@ public class GameConfigView extends JPanel {
 		modePanel.add(modeLabel);
 		
 		GameMode[] gameMode = GameMode.values();
+		modeBox = new JComboBox<GameMode>(gameMode);
 		
-		String[] gameString = new String[gameMode.length];
-		for (int i = 0; i < gameMode.length; i++) {
-			gameString[i] = gameMode[i].toString();
+		String propMode = properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName());
+		for (GameMode mode : gameMode) {
+			if (mode.getId().equals(propMode)) {
+				modeBox.setSelectedItem(mode);
+			}
 		}
 		
-		JComboBox<String> modeBox = new JComboBox<String>(gameString);
+		modeBox.addActionListener(new ModeListener());
+		
 		modePanel.add(modeBox);
 		
 		return modePanel;
+	}
+	
+	
+	private JPanel addMastermind() {
+		JPanel subMastermind = new JPanel();
+		
+		JLabel masL = new JLabel("Nombre de couleurs:");
+		subMastermind.add(masL);
+		
+		masC = new JComboBox<Byte>();
+		for (Byte i = 4; i <= 10; i++) {
+			masC.addItem(i);
+		}
+		
+		Byte tempMas = Byte.valueOf(properties.getProperty(PropertiesEnum.COLORNUMBER.getKeyName()));
+		if (tempMas < 4 || 10 < tempMas) {
+			masC.setSelectedIndex(0);
+		}
+		else {
+			masC.setSelectedIndex(tempMas - 4);
+		}
+		
+		masC.addActionListener(new ColorListener());
+		
+		subMastermind.add(masC);
+		
+		return subMastermind;
 	}
 	
 	
@@ -115,35 +147,11 @@ public class GameConfigView extends JPanel {
 		
 		triesP.add(triesF);
 		
-		
 		options.add(triesP);
 		
 		
-		// Mastermind
 		if (game.getName().equals("Mastermind")) {
-			JPanel subMastermind = new JPanel();
-			
-			JLabel masL = new JLabel("Nombre de couleurs:");
-			subMastermind.add(masL);
-			
-			masC = new JComboBox<Byte>();
-			for (Byte i = 4; i <= 10; i++) {
-				masC.addItem(i);
-			}
-			
-			Byte tempMas = Byte.valueOf(properties.getProperty(PropertiesEnum.COLORNUMBER.getKeyName()));
-			if (tempMas < 4 || 10 < tempMas) {
-				masC.setSelectedIndex(0);
-			}
-			else {
-				masC.setSelectedIndex(tempMas - 4);
-			}
-			
-			masC.addActionListener(new ModeListener());
-			
-			subMastermind.add(masC);
-			
-			options.add(subMastermind);
+			options.add(addMastermind());
 		}
 		
 		
@@ -160,7 +168,15 @@ public class GameConfigView extends JPanel {
 	
 	/*****************************
 	 * Listeners
-	 ****************************/
+	 *****************************/
+	class ColorListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			updateProperties(PropertiesEnum.COLORNUMBER.getKeyName(), masC.getSelectedItem().toString());
+		}
+	}
+	
+	
 	class DefaultConfigListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
@@ -178,7 +194,7 @@ public class GameConfigView extends JPanel {
 	class ModeListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
-			updateProperties(PropertiesEnum.COLORNUMBER.getKeyName(), masC.getSelectedItem().toString());
+			updateProperties(PropertiesEnum.GAMEMODE.getKeyName(), ((GameMode) modeBox.getSelectedItem()).getId());
 		}
 	}
 	

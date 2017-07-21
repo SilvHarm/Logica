@@ -3,6 +3,7 @@ package fr.silvharm.logica.config;
 
 public enum PropertiesEnum {
 	COLORNUMBER("colorNumber", "4"),
+	GAMEMODE("gameMode", GameMode.CHALLENGER.getId()),
 	SQUARESECRET("squareSecret", "5"),
 	TRIESNUMBER("triesNumber", "8");
 	
@@ -15,9 +16,9 @@ public enum PropertiesEnum {
 	}
 	
 	
-	/*
+	/********************************
 	 * Getters
-	 */
+	 ********************************/
 	public String getDefaultValue() {
 		return defaultValue;
 	}

@@ -14,6 +14,7 @@ public class PropertiesHandler {
 		
 		properties.setProperty(PropertiesEnum.TRIESNUMBER.getKeyName(), PropertiesEnum.TRIESNUMBER.getDefaultValue());
 		properties.setProperty(PropertiesEnum.SQUARESECRET.getKeyName(), PropertiesEnum.SQUARESECRET.getDefaultValue());
+		properties.setProperty(PropertiesEnum.GAMEMODE.getKeyName(), PropertiesEnum.GAMEMODE.getDefaultValue());
 		properties.setProperty(PropertiesEnum.COLORNUMBER.getKeyName(), PropertiesEnum.COLORNUMBER.getDefaultValue());
 		
 		updateProperties(properties);
