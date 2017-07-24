@@ -180,6 +180,13 @@ public class GameConfigView extends JPanel {
 	class DefaultConfigListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
+			String defaultMode = PropertiesEnum.GAMEMODE.getDefaultValue();
+			for (GameMode mode : GameMode.values()) {
+				if (mode.getId().equals(defaultMode)) {
+					modeBox.setSelectedItem(mode);
+				}
+			}
+			
 			squareSecretF.setText(PropertiesEnum.SQUARESECRET.getDefaultValue());
 			
 			triesF.setText(PropertiesEnum.TRIESNUMBER.getDefaultValue());
@@ -208,7 +215,12 @@ public class GameConfigView extends JPanel {
 				hasChanged = false;
 			}
 			
-			Game.launchGame(game, properties);
+			if (properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameMode.DEFENSEUR.getId())) {
+				AskPlayerSecretDialog askDia = new AskPlayerSecretDialog(game, properties);
+			}
+			else {
+				Game.launchGame(game, properties);
+			}
 		}
 	}
 }
