@@ -5,6 +5,7 @@ import java.util.Properties;
 import javax.swing.JPanel;
 
 import fr.silvharm.logica.MainWindow;
+import fr.silvharm.logica.config.GameMode;
 import fr.silvharm.logica.config.PropertiesEnum;
 
 public abstract class Game extends JPanel {
@@ -29,7 +30,9 @@ public abstract class Game extends JPanel {
 	public static void launchGame(Game game, Properties properties) {
 		game.updateGameConfig(properties);
 		
-		game.calculSolution();
+		if (!(properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameMode.DEFENSEUR.getId())))	{
+			game.calculSolution();
+		}		
 		
 		game.updateGamePanel();
 		
@@ -53,7 +56,7 @@ public abstract class Game extends JPanel {
 	/***************************
 	 * Abstract
 	 ***************************/
-	public abstract JPanel askPlayerSecret();
+	public abstract JPanel askPlayerSecret(Properties properties);
 	
 	
 	protected abstract void calculSolution();
@@ -62,9 +65,9 @@ public abstract class Game extends JPanel {
 	protected abstract void updateGamePanel();
 	
 	
-	/*
+	/*********************
 	 * Getters
-	 */
+	 *********************/
 	public String getName() {
 		return name;
 	}
