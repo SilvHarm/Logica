@@ -1,5 +1,7 @@
 package fr.silvharm.logica.game;
 
+import java.util.Properties;
+
 import javax.swing.JPanel;
 
 public class Mastermind extends Game {
@@ -9,7 +11,7 @@ public class Mastermind extends Game {
 	}
 	
 	
-	public JPanel askPlayerSecret() {
+	public JPanel askPlayerSecret(Properties properties) {
 		return null;
 	}
 	
@@ -24,5 +26,4 @@ public class Mastermind extends Game {
 		
 		
 	}
-	
 }

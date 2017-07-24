@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
 
 import javax.swing.BoxLayout;
@@ -13,6 +14,8 @@ import javax.swing.JPanel;
 
 import fr.silvharm.logica.MainWindow;
 import fr.silvharm.logica.config.GameConfigView;
+import fr.silvharm.logica.config.GameMode;
+import fr.silvharm.logica.config.PropertiesEnum;
 
 public class Recherche extends Game {
 	
@@ -24,11 +27,10 @@ public class Recherche extends Game {
 	}
 	
 	
-	public JPanel askPlayerSecret() {
-		JPanel secretPanel = new JPanel();
+	public JPanel askPlayerSecret(Properties properties) {
+		this.squareSecret = Byte.valueOf(properties.getProperty(PropertiesEnum.SQUARESECRET.getKeyName()));
 		
-		
-		return secretPanel;
+		return createBoxPanel();
 	}
 	
 	
@@ -40,14 +42,10 @@ public class Recherche extends Game {
 		}
 		
 		this.solutionTab = solution.toCharArray();
-		
-		System.out.println(solution);
 	}
 	
 	
-	protected void updateGamePanel() {
-		gamePanel.setLayout(new BoxLayout(gamePanel, BoxLayout.PAGE_AXIS));
-		
+	protected JPanel createBoxPanel() {
 		JPanel boxPanel = new JPanel();
 		
 		boxMap = new LinkedHashMap<String, Character>();
@@ -65,7 +63,25 @@ public class Recherche extends Game {
 			boxPanel.add(box);
 		}
 		
-		gamePanel.add(boxPanel);
+		return boxPanel;
+	}
+	
+	
+	protected void updateGameConfig(Properties properties) {
+		super.updateGameConfig(properties);
+		
+		if (properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameMode.DEFENSEUR.getId())) {
+			for (int i = 0; i < squareSecret; i++) {
+				solution += boxMap.get(Integer.toString(i));
+			}
+		}
+	}
+	
+	
+	protected void updateGamePanel() {
+		gamePanel.setLayout(new BoxLayout(gamePanel, BoxLayout.PAGE_AXIS));
+		
+		gamePanel.add(createBoxPanel());
 		
 		
 		JPanel butPanel = new JPanel();

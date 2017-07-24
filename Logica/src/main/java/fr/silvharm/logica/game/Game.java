@@ -13,7 +13,7 @@ public abstract class Game extends JPanel {
 	protected Byte squareSecret, triesNumber, triesRemaining;
 	protected char[] solutionTab;
 	protected JPanel gamePanel;
-	protected String answer = "", name, solution;
+	protected String answer = "", name, solution = "";
 	
 	
 	protected Game() {
@@ -30,9 +30,9 @@ public abstract class Game extends JPanel {
 	public static void launchGame(Game game, Properties properties) {
 		game.updateGameConfig(properties);
 		
-		if (!(properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameMode.DEFENSEUR.getId())))	{
+		if (!(properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameMode.DEFENSEUR.getId()))) {
 			game.calculSolution();
-		}		
+		}
 		
 		game.updateGamePanel();
 		
@@ -42,6 +42,8 @@ public abstract class Game extends JPanel {
 	
 	protected void startGame() {
 		MainWindow.getMainWindow().setView(this);
+		
+		System.out.println(solution);
 	}
 	
 	

@@ -216,7 +216,7 @@ public class GameConfigView extends JPanel {
 			}
 			
 			if (properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameMode.DEFENSEUR.getId())) {
-				AskPlayerSecretDialog askDia = new AskPlayerSecretDialog(game, properties);
+				new AskPlayerSecretDialog(game, properties);
 			}
 			else {
 				Game.launchGame(game, properties);
