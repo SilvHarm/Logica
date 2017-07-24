@@ -24,6 +24,14 @@ public class Recherche extends Game {
 	}
 	
 	
+	public JPanel askPlayerSecret() {
+		JPanel secretPanel = new JPanel();
+		
+		
+		return secretPanel;
+	}
+	
+	
 	protected void calculSolution() {
 		this.solution = Integer.toString(new Random().nextInt((int) Math.pow(10, squareSecret)));
 		
@@ -96,17 +104,17 @@ public class Recherche extends Game {
 	}
 	
 	
-	class VerifListener implements ActionListener	{
+	class VerifListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent arg0) {
-			for (int i = 0; i < squareSecret; i++)	{
+			for (int i = 0; i < squareSecret; i++) {
 				answer += boxMap.get(Integer.toString(i));
 			}
 			
-			if (answer.equals(solution))	{
+			if (answer.equals(solution)) {
 				System.out.println("Gagnez !");
 			}
-			else	{
+			else {
 				System.out.println("Try again !");
 			}
 			

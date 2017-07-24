@@ -21,11 +21,6 @@ public abstract class Game extends JPanel {
 	}
 	
 	
-	protected void calculSolution() {
-		
-	}
-	
-	
 	protected void endGame() {
 		
 	}
@@ -55,9 +50,16 @@ public abstract class Game extends JPanel {
 	}
 	
 	
-	protected void updateGamePanel() {
-		
-	}
+	/***************************
+	 * Abstract
+	 ***************************/
+	public abstract JPanel askPlayerSecret();
+	
+	
+	protected abstract void calculSolution();
+	
+	
+	protected abstract void updateGamePanel();
 	
 	
 	/*
