@@ -1,5 +1,6 @@
 package fr.silvharm.logica.config;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Properties;
@@ -24,15 +25,20 @@ public class AskPlayerSecretDialog extends JDialog {
 		this.game = game;
 		this.properties = properties;
 		
+		//this.setUndecorated(true);
 		this.setTitle("Quel est votre combinaison ?");
-		this.setSize(300, 200);
+		this.setSize(400, 120);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		
+		
 		JPanel mainPanel = new JPanel();
 		
+		BorderLayout bLayout = new BorderLayout();
+		mainPanel.setLayout(bLayout);
 		
-		mainPanel.add(game.askPlayerSecret(properties));
+		
+		mainPanel.add(game.askPlayerSecret(properties), BorderLayout.CENTER);
 		
 		
 		JPanel butPanel = new JPanel();
@@ -45,7 +51,7 @@ public class AskPlayerSecretDialog extends JDialog {
 		cancelB.addActionListener(new CancelListener());
 		butPanel.add(cancelB);
 		
-		mainPanel.add(butPanel);
+		mainPanel.add(butPanel, BorderLayout.PAGE_END);
 		
 		
 		this.setContentPane(mainPanel);
