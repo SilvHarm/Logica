@@ -21,7 +21,7 @@ public class GameConfigView extends JPanel {
 	private Game game;
 	private JComboBox<Byte> masC;
 	private JComboBox<Character> caseBox, trieBox01, trieBox02;
-	private JComboBox<GameMode> modeBox;
+	private JComboBox<GameModeEnum> modeBox;
 	private Properties properties;
 	
 	
@@ -29,21 +29,24 @@ public class GameConfigView extends JPanel {
 		game = gameG;
 		properties = PropertiesHandler.getProperties();
 		
+		
 		BorderLayout bLayout = new BorderLayout();
 		bLayout.setVgap(30);
 		this.setLayout(bLayout);
 		
+		
 		JPanel startPanel = new JPanel();
-		JLabel gameLabel = new JLabel(game.getName());
-		gameLabel.setAlignmentX(CENTER_ALIGNMENT);
+		
+		JLabel gameLabel = new JLabel(game.getName());	
 		startPanel.add(gameLabel);
+		
 		this.add(startPanel, BorderLayout.PAGE_START);
+		
 		
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.PAGE_AXIS));
 		
 		centerPanel.add(addModes());
-		
 		centerPanel.add(addOptions());
 		
 		this.add(centerPanel, BorderLayout.CENTER);
@@ -78,11 +81,11 @@ public class GameConfigView extends JPanel {
 		JLabel modeLabel = new JLabel("Mode de jeu:");
 		modePanel.add(modeLabel);
 		
-		GameMode[] gameMode = GameMode.values();
-		modeBox = new JComboBox<GameMode>(gameMode);
+		GameModeEnum[] gameMode = GameModeEnum.values();
+		modeBox = new JComboBox<GameModeEnum>(gameMode);
 		
 		String propMode = properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName());
-		for (GameMode mode : gameMode) {
+		for (GameModeEnum mode : gameMode) {
 			if (mode.getId().equals(propMode)) {
 				modeBox.setSelectedItem(mode);
 			}
@@ -210,7 +213,7 @@ public class GameConfigView extends JPanel {
 		
 		public void actionPerformed(ActionEvent e) {
 			String defaultMode = PropertiesEnum.GAMEMODE.getDefaultValue();
-			for (GameMode mode : GameMode.values()) {
+			for (GameModeEnum mode : GameModeEnum.values()) {
 				if (mode.getId().equals(defaultMode)) {
 					modeBox.setSelectedItem(mode);
 				}
@@ -232,7 +235,7 @@ public class GameConfigView extends JPanel {
 	class ModeListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
-			updateProperties(PropertiesEnum.GAMEMODE.getKeyName(), ((GameMode) modeBox.getSelectedItem()).getId());
+			updateProperties(PropertiesEnum.GAMEMODE.getKeyName(), ((GameModeEnum) modeBox.getSelectedItem()).getId());
 		}
 	}
 	
@@ -257,7 +260,7 @@ public class GameConfigView extends JPanel {
 				hasChanged = false;
 			}
 			
-			if (properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameMode.DEFENSEUR.getId())) {
+			if (properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameModeEnum.DEFENSEUR.getId())) {
 				new AskPlayerSecretDialog(game, properties);
 			}
 			else {

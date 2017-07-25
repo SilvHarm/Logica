@@ -1,7 +1,7 @@
 package fr.silvharm.logica.config;
 
 
-public enum GameMode {
+public enum GameModeEnum {
 	CHALLENGER("0", "Challenger"),
 	DEFENSEUR("1", "Defenseur"),
 	DUEL("2", "Duel");
@@ -9,7 +9,7 @@ public enum GameMode {
 	private String id, name;
 	
 	
-	GameMode(String id, String nameG) {
+	GameModeEnum(String id, String nameG) {
 		this.id = id;
 		this.name = nameG;
 	}
