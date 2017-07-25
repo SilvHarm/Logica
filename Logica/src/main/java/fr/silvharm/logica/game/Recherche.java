@@ -1,5 +1,6 @@
 package fr.silvharm.logica.game;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
@@ -7,14 +8,13 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import fr.silvharm.logica.MainWindow;
 import fr.silvharm.logica.config.GameConfigView;
-import fr.silvharm.logica.config.GameMode;
+import fr.silvharm.logica.config.GameModeEnum;
 import fr.silvharm.logica.config.PropertiesEnum;
 
 public class Recherche extends Game {
@@ -70,7 +70,7 @@ public class Recherche extends Game {
 	protected void updateGameConfig(Properties properties) {
 		super.updateGameConfig(properties);
 		
-		if (properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameMode.DEFENSEUR.getId())) {
+		if (properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameModeEnum.DEFENSEUR.getId())) {
 			for (int i = 0; i < squareSecret; i++) {
 				solution += boxMap.get(Integer.toString(i));
 			}
@@ -79,9 +79,12 @@ public class Recherche extends Game {
 	
 	
 	protected void updateGamePanel() {
-		gamePanel.setLayout(new BoxLayout(gamePanel, BoxLayout.PAGE_AXIS));
+		BorderLayout layout = new BorderLayout();
+		layout.setVgap(20);
+		gamePanel.setLayout(layout);
 		
-		gamePanel.add(createBoxPanel());
+		
+		gamePanel.add(createBoxPanel(), BorderLayout.CENTER);
 		
 		
 		JPanel butPanel = new JPanel();
@@ -94,7 +97,7 @@ public class Recherche extends Game {
 		backBut.addActionListener(new BackListener());
 		butPanel.add(backBut);
 		
-		gamePanel.add(butPanel);
+		gamePanel.add(butPanel, BorderLayout.PAGE_END);
 	}
 	
 	

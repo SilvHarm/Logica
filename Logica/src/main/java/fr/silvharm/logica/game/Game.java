@@ -1,24 +1,34 @@
 package fr.silvharm.logica.game;
 
+import java.awt.BorderLayout;
 import java.util.Properties;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import fr.silvharm.logica.MainWindow;
-import fr.silvharm.logica.config.GameMode;
+import fr.silvharm.logica.config.GameModeEnum;
 import fr.silvharm.logica.config.PropertiesEnum;
 
 public abstract class Game extends JPanel {
 	
 	protected Byte squareSecret, triesNumber, triesRemaining;
 	protected char[] solutionTab;
-	protected JPanel gamePanel;
+	protected JLabel triesRemLabel;
+	protected JPanel gamePanel, infoPanel;
 	protected String answer = "", name, solution = "";
 	
 	
 	protected Game() {
+		BorderLayout layout = new BorderLayout();
+		layout.setVgap(30);
+		this.setLayout(layout);
+		
+		this.infoPanel = new JPanel();
+		this.add(infoPanel, BorderLayout.PAGE_START);
+		
 		this.gamePanel = new JPanel();
-		this.add(gamePanel);
+		this.add(gamePanel, BorderLayout.CENTER);
 	}
 	
 	
@@ -30,10 +40,14 @@ public abstract class Game extends JPanel {
 	public static void launchGame(Game game, Properties properties) {
 		game.updateGameConfig(properties);
 		
-		if (!(properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameMode.DEFENSEUR.getId()))) {
+		if (!(properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameModeEnum.DEFENSEUR.getId()))) {
 			game.calculSolution();
 		}
 		
+		game.infoPanel.removeAll();
+		game.updateInfoPanel();
+		
+		game.gamePanel.removeAll();
 		game.updateGamePanel();
 		
 		game.startGame();
@@ -48,10 +62,30 @@ public abstract class Game extends JPanel {
 	
 	
 	protected void updateGameConfig(Properties properties) {
-		this.squareSecret = Byte.valueOf(properties.getProperty(PropertiesEnum.SQUARESECRET.getKeyName()));
+		squareSecret = Byte.valueOf(properties.getProperty(PropertiesEnum.SQUARESECRET.getKeyName()));
 		
-		this.triesNumber = Byte.valueOf(properties.getProperty(PropertiesEnum.SQUARESECRET.getKeyName()));
-		this.triesRemaining = triesNumber;
+		triesNumber = Byte.valueOf(properties.getProperty(PropertiesEnum.SQUARESECRET.getKeyName()));
+		
+		if (triesNumber == 0) {
+			triesRemaining = -1;
+		}
+		else {
+			triesRemaining = triesNumber;
+		}
+	}
+	
+	
+	protected void updateInfoPanel() {
+		triesRemLabel = new JLabel();
+		this.updateTriesRemaining();
+		infoPanel.add(triesRemLabel);
+	}
+	
+	
+	protected void updateTriesRemaining() {
+		triesRemaining--;
+		
+		triesRemLabel.setText("Essais restants: " + Byte.toString(triesRemaining));
 	}
 	
 	
