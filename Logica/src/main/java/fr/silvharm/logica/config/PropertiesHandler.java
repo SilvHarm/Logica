@@ -4,10 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 import java.util.Properties;
 
 public class PropertiesHandler {
@@ -16,10 +12,9 @@ public class PropertiesHandler {
 	private static void createProperties() {
 		Properties properties = new Properties();
 		
-		properties.setProperty(PropertiesEnum.TRIESNUMBER.getKeyName(), PropertiesEnum.TRIESNUMBER.getDefaultValue());
-		properties.setProperty(PropertiesEnum.SQUARESECRET.getKeyName(), PropertiesEnum.SQUARESECRET.getDefaultValue());
-		properties.setProperty(PropertiesEnum.GAMEMODE.getKeyName(), PropertiesEnum.GAMEMODE.getDefaultValue());
-		properties.setProperty(PropertiesEnum.COLORNUMBER.getKeyName(), PropertiesEnum.COLORNUMBER.getDefaultValue());
+		for (PropertiesEnum prop : PropertiesEnum.values())	{
+			properties.setProperty(prop.getKeyName(), prop.getDefaultValue());
+		}
 		
 		updateProperties(properties);
 	}
