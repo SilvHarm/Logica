@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.Properties;
 
 public class PropertiesHandler {
@@ -27,6 +31,8 @@ public class PropertiesHandler {
 		try (InputStream is = PropertiesHandler.class.getResourceAsStream("/config/config.properties")) {
 			if (is != null) {
 				properties.load(is);
+				
+				testProperties(properties);
 			}
 			else {
 				createProperties();
@@ -39,6 +45,38 @@ public class PropertiesHandler {
 		}
 		
 		return properties;
+	}
+	
+	
+	private static void testProperties(Properties properties) {
+		Boolean hasChanged = false;
+		
+		
+		String testStr;
+		for (PropertiesEnum prop : PropertiesEnum.values()) {
+			testStr = properties.getProperty(prop.getKeyName());
+			
+			if (testStr == null || testStr.length() != prop.getDefaultValue().length()) {
+				properties.setProperty(prop.getKeyName(), prop.getDefaultValue());
+				
+				hasChanged = true;
+			}
+			else {
+				try {
+					Integer.valueOf(testStr);
+				}
+				catch (NumberFormatException e) {
+					properties.setProperty(prop.getKeyName(), prop.getDefaultValue());
+					
+					hasChanged = true;
+				}
+			}
+		}
+		
+		
+		if (hasChanged) {
+			updateProperties(properties);
+		}
 	}
 	
 	
