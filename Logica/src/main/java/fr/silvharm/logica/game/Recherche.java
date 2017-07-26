@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -17,23 +16,24 @@ import fr.silvharm.logica.MainWindow;
 import fr.silvharm.logica.config.GameConfigView;
 import fr.silvharm.logica.config.GameModeEnum;
 import fr.silvharm.logica.config.PropertiesEnum;
+import fr.silvharm.logica.config.PropertiesHandler;
 
 public class Recherche extends Game {
 	
-	private Game game;
 	private JLabel ansLabel;
 	private Map<String, Character> boxMap;
 	
 	
 	public Recherche() {
-		this.game = this;
+		this.setGame();
 		
 		this.name = "Recherche";
 	}
 	
 	
-	public JPanel askPlayerSecret(Properties properties) {
-		this.squareSecret = Byte.valueOf(properties.getProperty(PropertiesEnum.SQUARESECRET.getKeyName()));
+	public JPanel askPlayerSecret() {
+		this.squareSecret = Byte
+				.valueOf(PropertiesHandler.getProperties().getProperty(PropertiesEnum.SQUARESECRET.getKeyName()));
 		
 		return createBoxPanel();
 	}
@@ -72,10 +72,12 @@ public class Recherche extends Game {
 	}
 	
 	
-	protected void updateGameConfig(Properties properties) {
-		super.updateGameConfig(properties);
+	protected void updateGameConfig() {
+		super.updateGameConfig();
 		
-		if (properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameModeEnum.DEFENSEUR.getId())) {
+		// if gameMode is "DEFENSEUR"
+		if (PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
+				.equals(GameModeEnum.DEFENSEUR.getId())) {
 			for (int i = 0; i < squareSecret; i++) {
 				solution += boxMap.get(Integer.toString(i));
 				
@@ -129,7 +131,7 @@ public class Recherche extends Game {
 	class BackListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent arg0) {
-			MainWindow.getMainWindow().setView(new GameConfigView(new Recherche()));
+			MainWindow.getMainWindow().setView(new GameConfigView());
 		}
 	}
 	
@@ -149,7 +151,7 @@ public class Recherche extends Game {
 		
 		public void actionPerformed(ActionEvent arg0) {
 			triesRemaining--;
-			game.setTriesRemLabel();
+			Game.getGame().setTriesRemLabel();
 			
 			String ansCompare = "";
 			
@@ -171,7 +173,7 @@ public class Recherche extends Game {
 			}
 			
 			if (answer.equals(solution)) {
-				game.endGame();
+				Game.getGame().endGame();
 			}
 			else {
 				ansLabel.setText(ansCompare);

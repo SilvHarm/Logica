@@ -18,15 +18,13 @@ import fr.silvharm.logica.game.GamesView;
 public class GameConfigView extends JPanel {
 	
 	private Boolean hasChanged = false;
-	private Game game;
 	private JComboBox<Byte> masC;
 	private JComboBox<Character> caseBox, trieBox01, trieBox02;
 	private JComboBox<GameModeEnum> modeBox;
 	private Properties properties;
 	
 	
-	public GameConfigView(Game gameG) {
-		game = gameG;
+	public GameConfigView() {
 		properties = PropertiesHandler.getProperties();
 		
 		
@@ -37,7 +35,7 @@ public class GameConfigView extends JPanel {
 		
 		JPanel startPanel = new JPanel();
 		
-		JLabel gameLabel = new JLabel(game.getName());	
+		JLabel gameLabel = new JLabel(Game.getGame().getName());
 		startPanel.add(gameLabel);
 		
 		this.add(startPanel, BorderLayout.PAGE_START);
@@ -166,7 +164,7 @@ public class GameConfigView extends JPanel {
 		options.add(triesP);
 		
 		
-		if (game.getName().equals("Mastermind")) {
+		if (Game.getGame().getName().equals("Mastermind")) {
 			options.add(addMastermind());
 		}
 		
@@ -225,7 +223,7 @@ public class GameConfigView extends JPanel {
 			trieBox01.setSelectedIndex(Integer.valueOf(trieStr[0]));
 			trieBox02.setSelectedIndex(Integer.valueOf(trieStr[1]));
 			
-			if (game.getName().equals("Mastermind")) {
+			if (Game.getGame().getName().equals("Mastermind")) {
 				masC.setSelectedIndex(Byte.valueOf(PropertiesEnum.COLORNUMBER.getDefaultValue()) - 4);
 			}
 		}
@@ -255,16 +253,16 @@ public class GameConfigView extends JPanel {
 		
 		public void actionPerformed(ActionEvent e) {
 			if (hasChanged) {
-				PropertiesHandler.updateProperties(properties);
+				PropertiesHandler.updateProperties();
 				
 				hasChanged = false;
 			}
 			
 			if (properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameModeEnum.DEFENSEUR.getId())) {
-				new AskPlayerSecretDialog(game, properties);
+				new AskPlayerSecretDialog();
 			}
 			else {
-				Game.launchGame(game, properties);
+				Game.launchGame();
 			}
 		}
 	}

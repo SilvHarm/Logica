@@ -8,42 +8,51 @@ import java.util.Properties;
 
 public class PropertiesHandler {
 	
+	private static Properties properties;
+	
 	
 	private static void createProperties() {
 		Properties properties = new Properties();
 		
-		for (PropertiesEnum prop : PropertiesEnum.values())	{
+		for (PropertiesEnum prop : PropertiesEnum.values()) {
 			properties.setProperty(prop.getKeyName(), prop.getDefaultValue());
 		}
 		
-		updateProperties(properties);
+		updateProperties();
 	}
 	
 	
 	public static Properties getProperties() {
-		Properties properties = new Properties();
-		
-		try (InputStream is = PropertiesHandler.class.getResourceAsStream("/config/config.properties")) {
-			if (is != null) {
-				properties.load(is);
-				
-				testProperties(properties);
-			}
-			else {
-				createProperties();
-				
-				properties = getProperties();
-			}
-		}
-		catch (IOException e) {
-			e.getMessage();
+		if (properties == null) {
+			loadProperties();
 		}
 		
 		return properties;
 	}
 	
 	
-	private static void testProperties(Properties properties) {
+	private static void loadProperties() {
+		properties = new Properties();
+		
+		try (InputStream is = PropertiesHandler.class.getResourceAsStream("/config/config.properties")) {
+			if (is != null) {
+				properties.load(is);
+				
+				testProperties();
+			}
+			else {
+				createProperties();
+				
+				loadProperties();
+			}
+		}
+		catch (IOException e) {
+			e.getMessage();
+		}
+	}
+	
+	
+	private static void testProperties() {
 		Boolean hasChanged = false;
 		
 		
@@ -70,12 +79,12 @@ public class PropertiesHandler {
 		
 		
 		if (hasChanged) {
-			updateProperties(properties);
+			updateProperties();
 		}
 	}
 	
 	
-	public static void updateProperties(Properties properties) {
+	public static void updateProperties() {
 		File file = new File("bin/config/config.properties");
 		
 		try (FileWriter writer = new FileWriter(file)) {

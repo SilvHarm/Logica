@@ -3,7 +3,6 @@ package fr.silvharm.logica.config;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -15,15 +14,10 @@ import fr.silvharm.logica.game.Game;
 public class AskPlayerSecretDialog extends JDialog {
 	
 	private static AskPlayerSecretDialog dialog;
-	private Game game;
-	private Properties properties;
 	
 	
-	public AskPlayerSecretDialog(Game game, Properties properties) {
+	public AskPlayerSecretDialog() {
 		dialog = this;
-		
-		this.game = game;
-		this.properties = properties;
 		
 		this.setTitle("Quel est votre combinaison ?");
 		this.setSize(400, 120);
@@ -37,7 +31,7 @@ public class AskPlayerSecretDialog extends JDialog {
 		mainPanel.setLayout(bLayout);
 		
 		
-		mainPanel.add(game.askPlayerSecret(properties), BorderLayout.CENTER);
+		mainPanel.add(Game.getGame().askPlayerSecret(), BorderLayout.CENTER);
 		
 		
 		JPanel butPanel = new JPanel();
@@ -78,7 +72,7 @@ public class AskPlayerSecretDialog extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			dialog.setVisible(false);
 			
-			Game.launchGame(dialog.game, dialog.properties);
+			Game.launchGame();
 		}
 	}
 }

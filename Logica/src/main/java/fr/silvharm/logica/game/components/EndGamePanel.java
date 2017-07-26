@@ -3,7 +3,6 @@ package fr.silvharm.logica.game.components;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -13,20 +12,15 @@ import fr.silvharm.logica.MainWindow;
 import fr.silvharm.logica.config.AskPlayerSecretDialog;
 import fr.silvharm.logica.config.GameModeEnum;
 import fr.silvharm.logica.config.PropertiesEnum;
+import fr.silvharm.logica.config.PropertiesHandler;
 import fr.silvharm.logica.game.Game;
 import fr.silvharm.logica.game.GamesView;
 
 
 public class EndGamePanel extends JPanel {
 	
-	private Game game;
-	private Properties properties;
 	
-	
-	public EndGamePanel(Game game, Properties properties) {
-		this.game = game;
-		this.properties = properties;
-		
+	public EndGamePanel() {
 		BorderLayout layout = new BorderLayout();
 		layout.setVgap(30);
 		this.setLayout(layout);
@@ -76,12 +70,14 @@ public class EndGamePanel extends JPanel {
 	class ReplayListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent arg0) {
-			if (properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameModeEnum.DEFENSEUR.getId())) {
-				new AskPlayerSecretDialog(game, properties);
+			// if gameMode is "DEFENSEUR"
+			if (PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
+					.equals(GameModeEnum.DEFENSEUR.getId())) {
+				new AskPlayerSecretDialog();
 			}
-			else	{
-				Game.launchGame(game, properties);
-			}	
+			else {
+				Game.launchGame();
+			}
 		}
 	}
 }

@@ -41,18 +41,16 @@ public class GamesView extends JPanel {
 	class GamesListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
-			Game game = null;
-			
 			switch (((JButton) e.getSource()).getName()) {
 				case "mastermind":
-					game = new Mastermind();
+					new Mastermind();
 					break;
 				case "recherche":
-					game = new Recherche();
+					new Recherche();
 					break;
 			}
 			
-			MainWindow.getMainWindow().setView(new GameConfigView(game));
+			MainWindow.getMainWindow().setView(new GameConfigView());
 		}
 	}
 	
