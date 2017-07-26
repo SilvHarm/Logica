@@ -10,6 +10,7 @@ import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import fr.silvharm.logica.MainWindow;
@@ -19,10 +20,14 @@ import fr.silvharm.logica.config.PropertiesEnum;
 
 public class Recherche extends Game {
 	
+	private Game game;
+	private JLabel ansLabel;
 	private Map<String, Character> boxMap;
 	
 	
 	public Recherche() {
+		this.game = this;
+		
 		this.name = "Recherche";
 	}
 	
@@ -35,13 +40,13 @@ public class Recherche extends Game {
 	
 	
 	protected void calculSolution() {
-		this.solution = Integer.toString(new Random().nextInt((int) Math.pow(10, squareSecret)));
+		solution = Integer.toString(new Random().nextInt((int) Math.pow(10, squareSecret)));
 		
 		while (solution.length() < squareSecret) {
 			solution = "0" + solution;
 		}
 		
-		this.solutionTab = solution.toCharArray();
+		solutionTab = solution.toCharArray();
 	}
 	
 	
@@ -73,6 +78,8 @@ public class Recherche extends Game {
 		if (properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameModeEnum.DEFENSEUR.getId())) {
 			for (int i = 0; i < squareSecret; i++) {
 				solution += boxMap.get(Integer.toString(i));
+				
+				solutionTab = solution.toCharArray();
 			}
 		}
 	}
@@ -84,7 +91,22 @@ public class Recherche extends Game {
 		gamePanel.setLayout(layout);
 		
 		
-		gamePanel.add(createBoxPanel(), BorderLayout.CENTER);
+		JPanel centerPanel = new JPanel();
+		
+		BorderLayout centLayout = new BorderLayout();
+		centLayout.setVgap(20);
+		centerPanel.setLayout(centLayout);
+		
+		centerPanel.add(createBoxPanel(), BorderLayout.CENTER);
+		
+		JPanel ansPanel = new JPanel();
+		
+		ansLabel = new JLabel();
+		ansPanel.add(ansLabel);
+		
+		centerPanel.add(ansPanel, BorderLayout.SOUTH);
+		
+		gamePanel.add(centerPanel, BorderLayout.CENTER);
 		
 		
 		JPanel butPanel = new JPanel();
@@ -126,15 +148,33 @@ public class Recherche extends Game {
 	class VerifListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent arg0) {
+			triesRemaining--;
+			game.setTriesRemLabel();
+			
+			String ansCompare = "";
+			
+			Character c;
 			for (int i = 0; i < squareSecret; i++) {
-				answer += boxMap.get(Integer.toString(i));
+				c = boxMap.get(Integer.toString(i));
+				
+				answer += c;
+				
+				if (Integer.valueOf(c) == solutionTab[i]) {
+					ansCompare += "=";
+				}
+				else if (Integer.valueOf(c) < solutionTab[i]) {
+					ansCompare += "+";
+				}
+				else if (Integer.valueOf(c) > solutionTab[i]) {
+					ansCompare += "-";
+				}
 			}
 			
 			if (answer.equals(solution)) {
-				System.out.println("Gagnez !");
+				game.endGame();
 			}
 			else {
-				System.out.println("Try again !");
+				ansLabel.setText(ansCompare);
 			}
 			
 			answer = "";

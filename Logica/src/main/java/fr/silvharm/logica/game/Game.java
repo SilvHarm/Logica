@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import fr.silvharm.logica.MainWindow;
 import fr.silvharm.logica.config.GameModeEnum;
 import fr.silvharm.logica.config.PropertiesEnum;
+import fr.silvharm.logica.game.components.EndGamePanel;
 
 public abstract class Game extends JPanel {
 	
@@ -33,7 +34,7 @@ public abstract class Game extends JPanel {
 	
 	
 	protected void endGame() {
-		
+		MainWindow.getMainWindow().setView(new EndGamePanel(this, null));
 	}
 	
 	
@@ -64,7 +65,7 @@ public abstract class Game extends JPanel {
 	protected void updateGameConfig(Properties properties) {
 		squareSecret = Byte.valueOf(properties.getProperty(PropertiesEnum.SQUARESECRET.getKeyName()));
 		
-		triesNumber = Byte.valueOf(properties.getProperty(PropertiesEnum.SQUARESECRET.getKeyName()));
+		triesNumber = Byte.valueOf(properties.getProperty(PropertiesEnum.TRIESNUMBER.getKeyName()));
 		
 		if (triesNumber == 0) {
 			triesRemaining = -1;
@@ -77,15 +78,8 @@ public abstract class Game extends JPanel {
 	
 	protected void updateInfoPanel() {
 		triesRemLabel = new JLabel();
-		this.updateTriesRemaining();
-		infoPanel.add(triesRemLabel);
-	}
-	
-	
-	protected void updateTriesRemaining() {
-		triesRemaining--;
-		
 		triesRemLabel.setText("Essais restants: " + Byte.toString(triesRemaining));
+		infoPanel.add(triesRemLabel);
 	}
 	
 	
@@ -107,4 +101,13 @@ public abstract class Game extends JPanel {
 	public String getName() {
 		return name;
 	}
+	
+	
+	/**********************
+	 * Setters
+	 **********************/
+	protected void setTriesRemLabel() {
+		triesRemLabel.setText("Essais restants: " + Byte.toString(triesRemaining));
+	}
+	
 }
