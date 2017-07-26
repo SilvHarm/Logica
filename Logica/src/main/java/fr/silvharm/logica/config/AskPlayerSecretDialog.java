@@ -25,7 +25,6 @@ public class AskPlayerSecretDialog extends JDialog {
 		this.game = game;
 		this.properties = properties;
 		
-		//this.setUndecorated(true);
 		this.setTitle("Quel est votre combinaison ?");
 		this.setSize(400, 120);
 		this.setLocationRelativeTo(null);
