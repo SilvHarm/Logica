@@ -13,9 +13,9 @@ import javax.swing.JPanel;
 
 import fr.silvharm.logica.MainWindow;
 import fr.silvharm.logica.game.Game;
-import fr.silvharm.logica.game.GamesView;
+import fr.silvharm.logica.game.GamesPanel;
 
-public class GameConfigView extends JPanel {
+public class GameConfigPanel extends JPanel {
 	
 	private Boolean hasChanged = false;
 	private JComboBox<Byte> masC;
@@ -24,7 +24,7 @@ public class GameConfigView extends JPanel {
 	private Properties properties;
 	
 	
-	public GameConfigView() {
+	public GameConfigPanel() {
 		properties = PropertiesHandler.getProperties();
 		
 		
@@ -186,7 +186,7 @@ public class GameConfigView extends JPanel {
 	class BackListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
-			MainWindow.getMainWindow().setView(new GamesView());
+			MainWindow.getMainWindow().setView(new GamesPanel());
 		}
 	}
 	

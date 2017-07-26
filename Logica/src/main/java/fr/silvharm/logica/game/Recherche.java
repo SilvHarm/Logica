@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import fr.silvharm.logica.MainWindow;
-import fr.silvharm.logica.config.GameConfigView;
+import fr.silvharm.logica.config.GameConfigPanel;
 import fr.silvharm.logica.config.GameModeEnum;
 import fr.silvharm.logica.config.PropertiesEnum;
 import fr.silvharm.logica.config.PropertiesHandler;
@@ -131,7 +131,7 @@ public class Recherche extends Game {
 	class BackListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent arg0) {
-			MainWindow.getMainWindow().setView(new GameConfigView());
+			MainWindow.getMainWindow().setView(new GameConfigPanel());
 		}
 	}
 	

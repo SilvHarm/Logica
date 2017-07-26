@@ -1,4 +1,4 @@
-package fr.silvharm.logica.game.components;
+package fr.silvharm.logica.game;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -13,8 +13,6 @@ import fr.silvharm.logica.config.AskPlayerSecretDialog;
 import fr.silvharm.logica.config.GameModeEnum;
 import fr.silvharm.logica.config.PropertiesEnum;
 import fr.silvharm.logica.config.PropertiesHandler;
-import fr.silvharm.logica.game.Game;
-import fr.silvharm.logica.game.GamesView;
 
 
 public class EndGamePanel extends JPanel {
@@ -54,7 +52,7 @@ public class EndGamePanel extends JPanel {
 	class ChangeGameListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent arg0) {
-			MainWindow.getMainWindow().setView(new GamesView());
+			MainWindow.getMainWindow().setView(new GamesPanel());
 		}
 	}
 	

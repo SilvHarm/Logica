@@ -8,11 +8,11 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import fr.silvharm.logica.MainWindow;
-import fr.silvharm.logica.config.GameConfigView;
+import fr.silvharm.logica.config.GameConfigPanel;
 
-public class GamesView extends JPanel {
+public class GamesPanel extends JPanel {
 	
-	public GamesView() {
+	public GamesPanel() {
 		JPanel pan = new JPanel();
 		pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
 		
@@ -50,7 +50,7 @@ public class GamesView extends JPanel {
 					break;
 			}
 			
-			MainWindow.getMainWindow().setView(new GameConfigView());
+			MainWindow.getMainWindow().setView(new GameConfigPanel());
 		}
 	}
 	

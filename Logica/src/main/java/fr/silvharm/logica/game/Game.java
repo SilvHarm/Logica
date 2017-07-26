@@ -9,7 +9,6 @@ import fr.silvharm.logica.MainWindow;
 import fr.silvharm.logica.config.GameModeEnum;
 import fr.silvharm.logica.config.PropertiesEnum;
 import fr.silvharm.logica.config.PropertiesHandler;
-import fr.silvharm.logica.game.components.EndGamePanel;
 
 public abstract class Game extends JPanel {
 	
