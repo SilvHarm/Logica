@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import fr.silvharm.logica.MainWindow;
+import fr.silvharm.logica.components.MyJComboBox;
 import fr.silvharm.logica.config.GameConfigPanel;
 import fr.silvharm.logica.config.GameModeEnum;
 import fr.silvharm.logica.config.PropertiesEnum;
@@ -58,7 +59,7 @@ public class Recherche extends Game {
 		
 		Character[] c = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 		for (int i = 0; i < squareSecret; i++) {
-			JComboBox<Character> box = new JComboBox<Character>(c);
+			JComboBox<Character> box = new MyJComboBox<Character>(c);
 			
 			box.setName(Integer.toString(i));
 			box.addActionListener(boxListener);
@@ -168,6 +169,10 @@ public class Recherche extends Game {
 				}
 				else if (Integer.valueOf(c) > solutionTab[i]) {
 					ansCompare += "-";
+				}
+				
+				if (i != squareSecret - 1)	{
+					ansCompare += "  ";
 				}
 			}
 			

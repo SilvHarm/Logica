@@ -12,12 +12,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import fr.silvharm.logica.MainWindow;
+import fr.silvharm.logica.components.MyJComboBox;
+import fr.silvharm.logica.components.MyMouseWheelListener;
 import fr.silvharm.logica.game.Game;
 import fr.silvharm.logica.game.GamesPanel;
 
 public class GameConfigPanel extends JPanel {
 	
 	private Boolean hasChanged = false;
+	private MyMouseWheelListener wheelListener = new MyMouseWheelListener();
 	private JComboBox<Byte> masC;
 	private JComboBox<Character> caseBox, trieBox01, trieBox02;
 	private JComboBox<GameModeEnum> modeBox;
@@ -80,7 +83,8 @@ public class GameConfigPanel extends JPanel {
 		modePanel.add(modeLabel);
 		
 		GameModeEnum[] gameMode = GameModeEnum.values();
-		modeBox = new JComboBox<GameModeEnum>(gameMode);
+		//modeBox = new MyJComboBox<GameModeEnum>(gameMode);
+		modeBox = new MyJComboBox<GameModeEnum>(gameMode);
 		
 		String propMode = properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName());
 		for (GameModeEnum mode : gameMode) {
@@ -103,7 +107,7 @@ public class GameConfigPanel extends JPanel {
 		JLabel masL = new JLabel("Nombre de couleurs:");
 		subMastermind.add(masL);
 		
-		masC = new JComboBox<Byte>();
+		masC = new MyJComboBox<Byte>();
 		for (Byte i = 4; i <= 10; i++) {
 			masC.addItem(i);
 		}
@@ -134,8 +138,8 @@ public class GameConfigPanel extends JPanel {
 		JLabel squareSecretL = new JLabel("Longueur de la solution:");
 		squareSecretP.add(squareSecretL);
 		
-		caseBox = new JComboBox<Character>(new Character[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' });
-		caseBox.setSelectedIndex(Integer.valueOf(properties.getProperty(PropertiesEnum.SQUARESECRET.getKeyName())) - 1);
+		caseBox = new MyJComboBox<Character>(new Character[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' });
+		caseBox.setSelectedIndex(Integer.valueOf(properties.getProperty(PropertiesEnum.SQUARESECRET.getKeyName())) - 1);	
 		caseBox.addActionListener(new CaseListener());
 		
 		squareSecretP.add(caseBox);
@@ -150,12 +154,12 @@ public class GameConfigPanel extends JPanel {
 		
 		String[] trieStr = properties.getProperty(PropertiesEnum.TRIESNUMBER.getKeyName()).split("");
 		
-		trieBox01 = new JComboBox<Character>(new Character[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
-		trieBox01.setSelectedIndex(Integer.valueOf(trieStr[0]));
+		trieBox01 = new MyJComboBox<Character>(new Character[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
+		trieBox01.setSelectedIndex(Integer.valueOf(trieStr[0]));	
 		trieBox01.addActionListener(new TrieListener());
 		
-		trieBox02 = new JComboBox<Character>(new Character[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
-		trieBox02.setSelectedIndex(Integer.valueOf(trieStr[1]));
+		trieBox02 = new MyJComboBox<Character>(new Character[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
+		trieBox02.setSelectedIndex(Integer.valueOf(trieStr[1]));	
 		trieBox02.addActionListener(new TrieListener());
 		
 		triesP.add(trieBox01);
