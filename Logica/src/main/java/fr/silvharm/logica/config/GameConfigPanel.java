@@ -13,14 +13,12 @@ import javax.swing.JPanel;
 
 import fr.silvharm.logica.MainWindow;
 import fr.silvharm.logica.components.MyJComboBox;
-import fr.silvharm.logica.components.MyMouseWheelListener;
 import fr.silvharm.logica.game.Game;
 import fr.silvharm.logica.game.GamesPanel;
 
 public class GameConfigPanel extends JPanel {
 	
 	private Boolean hasChanged = false;
-	private MyMouseWheelListener wheelListener = new MyMouseWheelListener();
 	private JComboBox<Byte> masC;
 	private JComboBox<Character> caseBox, trieBox01, trieBox02;
 	private JComboBox<GameModeEnum> modeBox;
@@ -83,7 +81,6 @@ public class GameConfigPanel extends JPanel {
 		modePanel.add(modeLabel);
 		
 		GameModeEnum[] gameMode = GameModeEnum.values();
-		//modeBox = new MyJComboBox<GameModeEnum>(gameMode);
 		modeBox = new MyJComboBox<GameModeEnum>(gameMode);
 		
 		String propMode = properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName());
