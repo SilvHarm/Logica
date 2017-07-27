@@ -34,8 +34,8 @@ public abstract class Game extends JPanel {
 	}
 	
 	
-	protected void endGame() {
-		MainWindow.getMainWindow().setView(new EndGamePanel());
+	protected void endGame(int endCode) {
+		MainWindow.getMainWindow().setView(new EndGamePanel(endCode));
 	}
 	
 	
@@ -91,7 +91,14 @@ public abstract class Game extends JPanel {
 	
 	protected void updateInfoPanel() {
 		triesRemLabel = new JLabel();
-		triesRemLabel.setText("Essais restants: " + Byte.toString(triesRemaining));
+		
+		if (triesRemaining == -1) {
+			triesRemLabel.setText("Essais restants: ∞");
+		}
+		else {
+			triesRemLabel.setText("Essais restants: " + Byte.toString(triesRemaining));
+		}
+		
 		infoPanel.add(triesRemLabel);
 	}
 	

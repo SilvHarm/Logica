@@ -151,7 +151,11 @@ public class Recherche extends Game {
 		
 		public void actionPerformed(ActionEvent arg0) {
 			triesRemaining--;
-			Game.getGame().setTriesRemLabel();
+			
+			if (0 < triesRemaining) {
+				Game.getGame().setTriesRemLabel();
+			}
+			
 			
 			String ansCompare = "";
 			
@@ -173,7 +177,10 @@ public class Recherche extends Game {
 			}
 			
 			if (answer.equals(solution)) {
-				Game.getGame().endGame();
+				Game.getGame().endGame(0);
+			}
+			else if (triesRemaining == 0) {
+				Game.getGame().endGame(1);
 			}
 			else {
 				ansLabel.setText(ansCompare);
