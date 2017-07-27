@@ -44,6 +44,20 @@ public abstract class Game extends JPanel {
 	}
 	
 	
+	protected void initInfoPanel() {
+		triesRemLabel = new JLabel();
+		
+		if (triesRemaining == -1) {
+			triesRemLabel.setText("Essais restants: ∞");
+		}
+		else {
+			triesRemLabel.setText("Essais restants: " + Byte.toString(triesRemaining));
+		}
+		
+		infoPanel.add(triesRemLabel);
+	}
+	
+	
 	public static void launchGame() {
 		game.updateGameConfig();
 		
@@ -54,10 +68,10 @@ public abstract class Game extends JPanel {
 		}
 		
 		game.infoPanel.removeAll();
-		game.updateInfoPanel();
+		game.initInfoPanel();
 		
 		game.gamePanel.removeAll();
-		game.updateGamePanel();
+		game.initGamePanel();
 		
 		game.startGame();
 	}
@@ -89,17 +103,12 @@ public abstract class Game extends JPanel {
 	}
 	
 	
-	protected void updateInfoPanel() {
-		triesRemLabel = new JLabel();
+	protected static void updateTriesRemaining() {
+		game.triesRemaining--;
 		
-		if (triesRemaining == -1) {
-			triesRemLabel.setText("Essais restants: ∞");
+		if (0 < game.triesRemaining) {
+			Game.getGame().setTriesRemLabel();
 		}
-		else {
-			triesRemLabel.setText("Essais restants: " + Byte.toString(triesRemaining));
-		}
-		
-		infoPanel.add(triesRemLabel);
 	}
 	
 	
@@ -112,7 +121,7 @@ public abstract class Game extends JPanel {
 	protected abstract void calculSolution();
 	
 	
-	protected abstract void updateGamePanel();
+	protected abstract void initGamePanel();
 	
 	
 	/*********************

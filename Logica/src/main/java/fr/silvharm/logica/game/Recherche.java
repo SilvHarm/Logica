@@ -72,22 +72,7 @@ public class Recherche extends Game {
 	}
 	
 	
-	protected void updateGameConfig() {
-		super.updateGameConfig();
-		
-		// if gameMode is "DEFENSEUR"
-		if (PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
-				.equals(GameModeEnum.DEFENSEUR.getId())) {
-			for (int i = 0; i < squareSecret; i++) {
-				solution += boxMap.get(Integer.toString(i));
-				
-				solutionTab = solution.toCharArray();
-			}
-		}
-	}
-	
-	
-	protected void updateGamePanel() {
+	protected void initGamePanel() {
 		BorderLayout layout = new BorderLayout();
 		layout.setVgap(20);
 		gamePanel.setLayout(layout);
@@ -125,6 +110,21 @@ public class Recherche extends Game {
 	}
 	
 	
+	protected void updateGameConfig() {
+		super.updateGameConfig();
+		
+		// if gameMode is "DEFENSEUR"
+		if (PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
+				.equals(GameModeEnum.DEFENSEUR.getId())) {
+			for (int i = 0; i < squareSecret; i++) {
+				solution += boxMap.get(Integer.toString(i));
+				
+				solutionTab = solution.toCharArray();
+			}
+		}
+	}
+	
+	
 	/*******************************
 	 * Listeners
 	 *******************************/
@@ -150,12 +150,7 @@ public class Recherche extends Game {
 	class VerifListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent arg0) {
-			triesRemaining--;
-			
-			if (0 < triesRemaining) {
-				Game.getGame().setTriesRemLabel();
-			}
-			
+			Game.updateTriesRemaining();
 			
 			String ansCompare = "";
 			
@@ -176,9 +171,11 @@ public class Recherche extends Game {
 				}
 			}
 			
+			// if win
 			if (answer.equals(solution)) {
 				Game.getGame().endGame(0);
 			}
+			// if lose
 			else if (triesRemaining == 0) {
 				Game.getGame().endGame(1);
 			}

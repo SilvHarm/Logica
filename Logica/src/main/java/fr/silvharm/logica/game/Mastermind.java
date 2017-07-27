@@ -21,7 +21,7 @@ public class Mastermind extends Game {
 	}
 	
 	
-	protected void updateGamePanel() {
+	protected void initGamePanel() {
 		
 	}
 }
