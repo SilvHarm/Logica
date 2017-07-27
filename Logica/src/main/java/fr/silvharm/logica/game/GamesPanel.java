@@ -1,8 +1,10 @@
 package fr.silvharm.logica.game;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -12,29 +14,46 @@ import fr.silvharm.logica.config.GameConfigPanel;
 
 public class GamesPanel extends JPanel {
 	
+	private Dimension dMin = new Dimension(0, 5), dPref = new Dimension(0, 30);
+	
+	
 	public GamesPanel() {
-		JPanel pan = new JPanel();
-		pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		
 		GamesListener gamesList = new GamesListener();
 		
+		
+		this.add(new Box.Filler(null, null, null));
+		
+		
 		JButton mastermind = new JButton("Mastermind");
 		mastermind.setName("mastermind");
+		mastermind.setAlignmentX(CENTER_ALIGNMENT);
 		mastermind.addActionListener(gamesList);
-		pan.add(mastermind);
+		this.add(mastermind);
+		
+		
+		this.add(new Box.Filler(dMin, dPref, dPref));
+		
 		
 		JButton recherche = new JButton("Recherche");
 		recherche.setName("recherche");
+		recherche.setAlignmentX(CENTER_ALIGNMENT);
 		recherche.addActionListener(gamesList);
-		pan.add(recherche);
+		this.add(recherche);
+		
+		
+		this.add(new Box.Filler(dMin, dPref, dPref));
+		
 		
 		JButton exit = new JButton("Quitter");
+		exit.setAlignmentX(CENTER_ALIGNMENT);
 		exit.addActionListener(new ExitListener());
-		pan.add(exit);
+		this.add(exit);
 		
 		
-		this.add(pan);
+		this.add(new Box.Filler(null, null, null));
 	}
 	
 	

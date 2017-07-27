@@ -1,7 +1,10 @@
 package fr.silvharm.logica.game;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -16,6 +19,7 @@ public abstract class Game extends JPanel {
 	
 	protected Byte squareSecret, triesNumber, triesRemaining;
 	protected char[] solutionTab;
+	protected int endCode;
 	protected JLabel triesRemLabel;
 	protected JPanel gamePanel, infoPanel;
 	protected String answer, name, solution;
@@ -34,8 +38,8 @@ public abstract class Game extends JPanel {
 	}
 	
 	
-	protected void endGame(int endCode) {
-		MainWindow.getMainWindow().setView(new EndGamePanel(endCode));
+	protected void endGame() {
+		MainWindow.getMainWindow().setView(new EndGamePanel());
 	}
 	
 	
@@ -45,6 +49,8 @@ public abstract class Game extends JPanel {
 	
 	
 	protected void initInfoPanel() {
+		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.X_AXIS));
+		
 		triesRemLabel = new JLabel();
 		
 		if (triesRemaining == -1) {
@@ -55,6 +61,16 @@ public abstract class Game extends JPanel {
 		}
 		
 		infoPanel.add(triesRemLabel);
+		
+		
+		// separator
+		infoPanel.add(new Box.Filler(null, null, new Dimension(Integer.MAX_VALUE, 0)));
+		
+		
+		JLabel solLabel = new JLabel("Solution: ");
+		infoPanel.add(solLabel);
+		
+		infoPanel.add(game.createSolutionPanel());
 	}
 	
 	
@@ -79,8 +95,6 @@ public abstract class Game extends JPanel {
 	
 	protected void startGame() {
 		MainWindow.getMainWindow().setView(this);
-		
-		System.out.println(solution);
 	}
 	
 	
@@ -119,6 +133,9 @@ public abstract class Game extends JPanel {
 	
 	
 	protected abstract void calculSolution();
+	
+	
+	public abstract JPanel createSolutionPanel();
 	
 	
 	protected abstract void initGamePanel();

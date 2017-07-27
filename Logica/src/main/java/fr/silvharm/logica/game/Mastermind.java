@@ -21,6 +21,11 @@ public class Mastermind extends Game {
 	}
 	
 	
+	public JPanel createSolutionPanel() {
+		return null;
+	}
+	
+	
 	protected void initGamePanel() {
 		
 	}

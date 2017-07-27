@@ -73,6 +73,16 @@ public class Recherche extends Game {
 	}
 	
 	
+	public JPanel createSolutionPanel() {
+		JPanel solPanel = new JPanel();
+		
+		JLabel solLabel = new JLabel(solution);
+		solPanel.add(solLabel);
+		
+		return solPanel;
+	}
+	
+	
 	protected void initGamePanel() {
 		BorderLayout layout = new BorderLayout();
 		layout.setVgap(20);
@@ -171,18 +181,20 @@ public class Recherche extends Game {
 					ansCompare += "-";
 				}
 				
-				if (i != squareSecret - 1)	{
+				if (i != squareSecret - 1) {
 					ansCompare += "  ";
 				}
 			}
 			
 			// if win
 			if (answer.equals(solution)) {
-				Game.getGame().endGame(0);
+				Game.getGame().endCode = 0;
+				Game.getGame().endGame();
 			}
 			// if lose
 			else if (triesRemaining == 0) {
-				Game.getGame().endGame(1);
+				Game.getGame().endCode = 1;
+				Game.getGame().endGame();
 			}
 			else {
 				ansLabel.setText(ansCompare);

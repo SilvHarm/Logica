@@ -1,9 +1,11 @@
 package fr.silvharm.logica.game;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,14 +20,17 @@ import fr.silvharm.logica.config.PropertiesHandler;
 
 public class EndGamePanel extends JPanel {
 	
+	private Game game;
 	
-	public EndGamePanel(int endCode) {
+	
+	public EndGamePanel() {
+		game = Game.getGame();
+		
 		BorderLayout layout = new BorderLayout();
-		layout.setVgap(30);
 		this.setLayout(layout);
 		
 		
-		this.add(getInfoPanel(endCode), BorderLayout.CENTER);
+		this.add(getInfoPanel(), BorderLayout.CENTER);
 		
 		
 		JPanel butPanel = new JPanel();
@@ -46,14 +51,15 @@ public class EndGamePanel extends JPanel {
 	}
 	
 	
-	private JPanel getInfoPanel(int endCode) {
+	private JPanel getInfoPanel() {
 		JPanel pan = new JPanel();
-		pan.setLayout(new BoxLayout(pan, BoxLayout.PAGE_AXIS));
+		
+		pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
 		
 		
-		String str = "<html><br><br><br><br><br><br>";
-		String str2 = "<html>";
-		switch (endCode) {
+		String str = "";
+		String str2 = "";
+		switch (game.endCode) {
 			// Player win
 			case 0:
 				str += "Vous avez gagné.";
@@ -83,36 +89,59 @@ public class EndGamePanel extends JPanel {
 				str2 += "Arrêtez de la déconcentrer !";
 				break;
 		}
-		str += "</html>";
-		str2 += "<br><br><br></html>";
+		
+		// top whithe-space
+		pan.add(new Box.Filler(new Dimension(0, 5), new Dimension(0, 60), null));
+		
 		
 		JLabel winLoseLabel = new JLabel(str);
-		winLoseLabel.setHorizontalAlignment(JLabel.CENTER);
+		winLoseLabel.setAlignmentX(CENTER_ALIGNMENT);
 		pan.add(winLoseLabel);
 		
 		JLabel commentLabel = new JLabel(str2);
-		commentLabel.setHorizontalAlignment(JLabel.CENTER);
+		commentLabel.setAlignmentX(CENTER_ALIGNMENT);
 		pan.add(commentLabel);
 		
 		
-		pan.add(getTriesLabel(endCode));
+		// separator
+		pan.add(new Box.Filler(new Dimension(0, 5), new Dimension(0, 30), new Dimension(0, 30)));
+		
+		
+		JLabel triesLabel = getTriesLabel();
+		triesLabel.setAlignmentX(CENTER_ALIGNMENT);
+		pan.add(triesLabel);
+		
+		
+		// separator
+		pan.add(new Box.Filler(new Dimension(0, 5), new Dimension(0, 80), new Dimension(0, 80)));
+		
+		
+		JLabel solLabel = new JLabel("Solution :");
+		solLabel.setAlignmentX(CENTER_ALIGNMENT);
+		pan.add(solLabel);
+		
+		JPanel solPanel = game.createSolutionPanel();
+		solPanel.setAlignmentX(CENTER_ALIGNMENT);
+		pan.add(solPanel);
 		
 		
 		return pan;
 	}
 	
 	
-	private JLabel getTriesLabel(int endCode) {
-		String str = "<html>";
-		Game game = Game.getGame();
+	private JLabel getTriesLabel() {
+		String str = "";
 		
 		// if win
-		if (endCode % 2 == 0) {
+		if (game.endCode % 2 == 0) {
 			if (game.triesRemaining == -2) {
 				str += "1 essai aura été nécessaire !";
 			}
 			else if (game.triesRemaining < 0) {
 				str += (-game.triesRemaining - 1) + " essais auront été nécessaires.";
+			}
+			else if (game.triesRemaining == 0) {
+				str += "C'était le denier essai sur " + game.triesNumber + ".";
 			}
 			else if (game.triesRemaining >= 0) {
 				str += "Il restait " + game.triesRemaining + "/" + game.triesNumber + " essais.";
@@ -127,10 +156,7 @@ public class EndGamePanel extends JPanel {
 			}
 		}
 		
-		str += "</html>";
-		
 		JLabel triesLabel = new JLabel(str);
-		triesLabel.setHorizontalAlignment(JLabel.CENTER);
 		
 		return triesLabel;
 	}
