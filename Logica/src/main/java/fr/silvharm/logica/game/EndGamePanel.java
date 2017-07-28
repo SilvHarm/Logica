@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import fr.silvharm.logica.MainWindow;
-import fr.silvharm.logica.config.AskPlayerSecretDialog;
 import fr.silvharm.logica.config.GameModeEnum;
 import fr.silvharm.logica.config.PropertiesEnum;
 import fr.silvharm.logica.config.PropertiesHandler;

@@ -73,7 +73,7 @@ public class Recherche extends Game {
 	}
 	
 	
-	public JPanel createSolutionPanel() {
+	protected JPanel createSolutionPanel() {
 		JPanel solPanel = new JPanel();
 		
 		JLabel solLabel = new JLabel(solution);
@@ -161,7 +161,10 @@ public class Recherche extends Game {
 	class VerifListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent arg0) {
+			playerAnswer = "";
+			
 			Game.updateTriesRemaining();
+			
 			
 			String ansCompare = "";
 			
@@ -169,7 +172,7 @@ public class Recherche extends Game {
 			for (int i = 0; i < squareSecret; i++) {
 				c = boxMap.get(Integer.toString(i));
 				
-				answer += c;
+				playerAnswer += c;
 				
 				if (Integer.valueOf(c) == solutionTab[i]) {
 					ansCompare += "=";
@@ -186,21 +189,10 @@ public class Recherche extends Game {
 				}
 			}
 			
-			// if win
-			if (answer.equals(solution)) {
-				Game.getGame().endCode = 0;
-				Game.getGame().endGame();
-			}
-			// if lose
-			else if (triesRemaining == 0) {
-				Game.getGame().endCode = 1;
-				Game.getGame().endGame();
-			}
-			else {
-				ansLabel.setText(ansCompare);
-			}
+			ansLabel.setText(ansCompare);
 			
-			answer = "";
+			
+			Game.getGame().isFinish();
 		}
 	}
 }

@@ -22,7 +22,7 @@ public abstract class Game extends JPanel {
 	protected int endCode;
 	protected JLabel triesRemLabel;
 	protected JPanel gamePanel, infoPanel;
-	protected String answer, name, solution;
+	protected String aiAnswer, name, playerAnswer, solution;
 	
 	
 	protected Game() {
@@ -93,14 +93,60 @@ public abstract class Game extends JPanel {
 	}
 	
 	
+	protected void isFinish() {
+		// if Player and AI has win
+		if (playerAnswer.equals(solution) && aiAnswer.equals(solution)) {
+			endCode = 4;
+		}
+		
+		// if AI has win
+		if (aiAnswer.equals(solution)) {
+			endCode = 2;
+		}
+		
+		// if Player has win
+		if (playerAnswer.equals(solution)) {
+			endCode = 0;
+		}
+		
+		
+		// if lose
+		if (triesRemaining == 0) {
+			// if Player and AI has lost
+			if (PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
+					.equals(GameModeEnum.DUEL.getId())) {
+				endCode = 5;
+			}
+			// if AI has lost
+			else if (PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
+					.equals(GameModeEnum.DEFENSEUR.getId())) {
+				endCode = 3;
+			}
+			// if Player has lost
+			else {
+				endCode = 1;
+			}
+		}
+		
+		
+		if (endCode != -1) {
+			this.endGame();
+		}
+	}
+	
+	
 	protected void startGame() {
 		MainWindow.getMainWindow().setView(this);
 	}
 	
 	
 	protected void updateGameConfig() {
-		answer = "";
+		Game.getGame().endCode = -1;
+		
+		aiAnswer = "";
+		playerAnswer = "";
 		solution = "";
+		
 		
 		squareSecret = Byte
 				.valueOf(PropertiesHandler.getProperties().getProperty(PropertiesEnum.SQUARESECRET.getKeyName()));
@@ -120,7 +166,7 @@ public abstract class Game extends JPanel {
 	protected static void updateTriesRemaining() {
 		game.triesRemaining--;
 		
-		if (0 < game.triesRemaining) {
+		if (0 <= game.triesRemaining) {
 			Game.getGame().setTriesRemLabel();
 		}
 	}
@@ -135,7 +181,7 @@ public abstract class Game extends JPanel {
 	protected abstract void calculSolution();
 	
 	
-	public abstract JPanel createSolutionPanel();
+	protected abstract JPanel createSolutionPanel();
 	
 	
 	protected abstract void initGamePanel();
@@ -158,7 +204,7 @@ public abstract class Game extends JPanel {
 	
 	
 	protected void setTriesRemLabel() {
-		triesRemLabel.setText("Essais restants: " + Byte.toString(triesRemaining));
+		triesRemLabel.setText("Essais restants: " + triesRemaining);
 	}
 	
 }
