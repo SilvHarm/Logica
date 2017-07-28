@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import fr.silvharm.logica.MainWindow;
 import fr.silvharm.logica.components.MyJComboBox;
+import fr.silvharm.logica.game.AskPlayerSecretDialog;
 import fr.silvharm.logica.game.Game;
 import fr.silvharm.logica.game.GamesPanel;
 

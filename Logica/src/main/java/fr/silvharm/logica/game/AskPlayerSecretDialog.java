@@ -1,4 +1,4 @@
-package fr.silvharm.logica.config;
+package fr.silvharm.logica.game;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-
-import fr.silvharm.logica.game.Game;
 
 
 public class AskPlayerSecretDialog extends JDialog {
