@@ -12,7 +12,7 @@ public class MainWindow extends JFrame {
 	
 	private MainWindow() {
 		this.setTitle("Logica");
-		this.setSize(600, 400);
+		this.setSize(600, 800);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		

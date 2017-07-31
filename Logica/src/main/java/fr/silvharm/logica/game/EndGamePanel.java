@@ -112,14 +112,14 @@ public class EndGamePanel extends JPanel {
 		
 		
 		// separator
-		pan.add(new Box.Filler(new Dimension(0, 5), new Dimension(0, 80), new Dimension(0, 80)));
+		pan.add(new Box.Filler(new Dimension(0, 5), new Dimension(0, 60), new Dimension(0, 60)));
 		
 		
 		JLabel solLabel = new JLabel("Solution :");
 		solLabel.setAlignmentX(CENTER_ALIGNMENT);
 		pan.add(solLabel);
 		
-		JPanel solPanel = game.createSolutionPanel();
+		JPanel solPanel = game.createAnsSolPanel(game.solution);
 		solPanel.setAlignmentX(CENTER_ALIGNMENT);
 		pan.add(solPanel);
 		

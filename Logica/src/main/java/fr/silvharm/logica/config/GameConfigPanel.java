@@ -137,7 +137,7 @@ public class GameConfigPanel extends JPanel {
 		squareSecretP.add(squareSecretL);
 		
 		caseBox = new MyJComboBox<Character>(new Character[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' });
-		caseBox.setSelectedIndex(Integer.valueOf(properties.getProperty(PropertiesEnum.SQUARESECRET.getKeyName())) - 1);	
+		caseBox.setSelectedIndex(Integer.valueOf(properties.getProperty(PropertiesEnum.SQUARESECRET.getKeyName())) - 1);
 		caseBox.addActionListener(new CaseListener());
 		
 		squareSecretP.add(caseBox);
@@ -153,11 +153,11 @@ public class GameConfigPanel extends JPanel {
 		String[] trieStr = properties.getProperty(PropertiesEnum.TRIESNUMBER.getKeyName()).split("");
 		
 		trieBox01 = new MyJComboBox<Character>(new Character[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
-		trieBox01.setSelectedIndex(Integer.valueOf(trieStr[0]));	
+		trieBox01.setSelectedIndex(Integer.valueOf(trieStr[0]));
 		trieBox01.addActionListener(new TrieListener());
 		
 		trieBox02 = new MyJComboBox<Character>(new Character[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
-		trieBox02.setSelectedIndex(Integer.valueOf(trieStr[1]));	
+		trieBox02.setSelectedIndex(Integer.valueOf(trieStr[1]));
 		trieBox02.addActionListener(new TrieListener());
 		
 		triesP.add(trieBox01);

@@ -11,6 +11,11 @@ public class Mastermind extends Game {
 	}
 	
 	
+	protected void aiTurn() {
+		
+	}
+	
+	
 	public JPanel askPlayerSecret() {
 		return null;
 	}
@@ -21,12 +26,17 @@ public class Mastermind extends Game {
 	}
 	
 	
-	protected JPanel createSolutionPanel() {
+	protected JPanel createAnsSolPanel(String str) {
 		return null;
 	}
 	
 	
 	protected void initGamePanel() {
+		
+	}
+	
+	
+	protected void verifyListenerEcho() {
 		
 	}
 }
