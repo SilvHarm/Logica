@@ -3,7 +3,7 @@ package fr.silvharm.logica;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import fr.silvharm.logica.game.GamesView;
+import fr.silvharm.logica.game.GamesPanel;
 
 public class MainWindow extends JFrame {
 	
@@ -12,11 +12,11 @@ public class MainWindow extends JFrame {
 	
 	private MainWindow() {
 		this.setTitle("Logica");
-		this.setSize(600, 400);
+		this.setSize(600, 800);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		
-		this.setView(new GamesView());
+		this.setView(new GamesPanel());
 		
 		this.setVisible(true);
 	}
