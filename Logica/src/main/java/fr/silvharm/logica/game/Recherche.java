@@ -17,6 +17,7 @@ import fr.silvharm.logica.config.PropertiesHandler;
 
 public class Recherche extends Game {
 	
+	private Boolean luckyAI;
 	private Map<String, Integer> boxMap;
 	
 	
@@ -47,8 +48,8 @@ public class Recherche extends Game {
 			}
 			
 			
-			// if < 4, AI will try it's luck
-			if (new Random().nextInt(10) < 4) {
+			// if AI feel lucky
+			if (luckyAI) {
 				aiProp = new Random().nextInt(aiMemory[1][i] - aiMemory[0][i] + 1) + aiMemory[0][i];
 			}
 			// else it's will play logically
@@ -159,6 +160,13 @@ public class Recherche extends Game {
 			for (int i = 0; i < squareSecret; i++) {
 				aiMemory[0][i] = 0;
 				aiMemory[1][i] = 9;
+			}
+			
+			
+			//AI will play logically except if it's feel lucky
+			luckyAI = false;
+			if (new Random().nextInt(10) < 4) {
+				luckyAI = true;
 			}
 		}
 		

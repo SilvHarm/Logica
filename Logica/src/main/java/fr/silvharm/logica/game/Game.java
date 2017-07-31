@@ -162,31 +162,32 @@ public abstract class Game extends JPanel {
 		}
 		
 		// if AI has win
-		if (aiAnswer.equals(solution)) {
+		else if (aiAnswer.equals(solution)) {
 			endCode = 2;
 		}
 		
 		// if Player has win
-		if (playerAnswer.equals(solution)) {
+		else if (playerAnswer.equals(solution)) {
 			endCode = 0;
 		}
-		
-		
-		// if lose
-		if (triesRemaining == 0) {
-			// if Player and AI has lost
-			if (PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
-					.equals(GameModeEnum.DUEL.getId())) {
-				endCode = 5;
-			}
-			// if AI has lost
-			else if (PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
-					.equals(GameModeEnum.DEFENSEUR.getId())) {
-				endCode = 3;
-			}
-			// if Player has lost
-			else {
-				endCode = 1;
+		else {
+			
+			// if lose
+			if (triesRemaining == 0) {
+				// if Player and AI has lost
+				if (PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
+						.equals(GameModeEnum.DUEL.getId())) {
+					endCode = 5;
+				}
+				// if AI has lost
+				else if (PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
+						.equals(GameModeEnum.DEFENSEUR.getId())) {
+					endCode = 3;
+				}
+				// if Player has lost
+				else {
+					endCode = 1;
+				}
 			}
 		}
 		
@@ -253,9 +254,9 @@ public abstract class Game extends JPanel {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				if (endCode == -1) {
-					game.aiTurn();
-					
 					game.updateTriesRemaining();
+					
+					game.aiTurn();
 				}
 				else {
 					timer.stop();
@@ -266,9 +267,9 @@ public abstract class Game extends JPanel {
 		});
 		
 		
-		game.aiTurn();
-		
 		game.updateTriesRemaining();
+		
+		game.aiTurn();
 		
 		
 		if (endCode == -1) {
