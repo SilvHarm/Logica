@@ -149,10 +149,28 @@ public class Mastermind extends Game {
 	
 	
 	protected JPanel createAnsSolPanel(String str) {
+		char[] cTab = str.toCharArray();
+		
+		
 		JPanel panel = new JPanel();
 		
-		JLabel label = new JLabel(str);
-		panel.add(label);
+		Dimension dim = new Dimension(20, 0);
+		for (int i = 0; i < squareSecret; i++) {
+			// add space to separate box in group of 3
+			if (i != 0 && ((squareSecret - i) % 3) == 0) {
+				panel.add(Box.createRigidArea(dim));
+			}
+			
+			ColorButton button = new ColorButton();
+			
+			for (ColorEnum col : colorTab) {
+				if (col.getId() == (cTab[i] - '0')) {
+					button.setBackground(col.getColor());
+				}
+			}
+			
+			panel.add(button);
+		}
 		
 		return panel;
 	}
@@ -233,17 +251,20 @@ public class Mastermind extends Game {
 	}
 	
 	
-	protected void nextColor(ColorButton button) {
+	protected void nextColor(ColorButton button, int modifier) {
 		int i = button.getTabId();
 		
-		if (i + 1 >= colorTab.length) {
-			button.setTabId(0);
+		if (i + modifier >= colorTab.length) {
 			i = 0;
 		}
-		else {
-			button.setTabId(i + 1);
-			i++;
+		else if (i + modifier < 0) {
+			i = colorTab.length - 1;
 		}
+		else {
+			i += modifier;
+		}
+		System.out.println(i);
+		button.setTabId(i);
 		
 		button.setBackground(colorTab[i].getColor());
 		
@@ -298,7 +319,7 @@ public class Mastermind extends Game {
 		public void actionPerformed(ActionEvent arg0) {
 			MainWindow.getMainWindow().requestFocus();
 			
-			nextColor((ColorButton) arg0.getSource());
+			nextColor((ColorButton) arg0.getSource(), 1);
 		}
 	}
 	
@@ -306,7 +327,12 @@ public class Mastermind extends Game {
 	class ColorWheelListener implements MouseWheelListener {
 		
 		public void mouseWheelMoved(MouseWheelEvent arg0) {
-			nextColor((ColorButton) arg0.getSource());
+			if (arg0.getWheelRotation() > 0) {
+				nextColor((ColorButton) arg0.getSource(), -1);
+			}
+			else {
+				nextColor((ColorButton) arg0.getSource(), 1);
+			}
 		}
 	}
 }

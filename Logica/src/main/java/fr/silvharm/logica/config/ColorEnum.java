@@ -45,7 +45,7 @@ public enum ColorEnum {
 	/****************************
 	 * Setters
 	 ****************************/
-	public void getId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 }

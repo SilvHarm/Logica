@@ -8,6 +8,11 @@ public class ColorButton extends JButton {
 	protected int colorId, tabId;
 	
 	
+	public ColorButton() {
+		this.setText(" ");
+	}
+	
+	
 	public ColorButton(int colorId, int tabId) {
 		this.colorId = colorId;
 		this.tabId = tabId;
