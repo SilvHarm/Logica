@@ -1,6 +1,7 @@
 package fr.silvharm.logica.config;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +10,8 @@ import java.util.Properties;
 public class PropertiesHandler {
 	
 	private static Properties properties;
+	
+	private static String configPath = "config.properties";
 	
 	
 	private static void createProperties() {
@@ -34,17 +37,17 @@ public class PropertiesHandler {
 	private static void loadProperties() {
 		properties = new Properties();
 		
-		try (InputStream is = PropertiesHandler.class.getResourceAsStream("/config/Logica_config.properties")) {
-			if (is != null) {
-				properties.load(is);
-				
-				testProperties();
-			}
-			else {
-				createProperties();
-				
-				loadProperties();
-			}
+		if (!new File(configPath).exists()) {
+			createProperties();
+			
+			loadProperties();
+		}
+		
+		
+		try (InputStream is = new FileInputStream(configPath)) {
+			properties.load(is);
+			
+			testProperties();
 		}
 		catch (IOException e) {
 			e.getMessage();
@@ -54,7 +57,6 @@ public class PropertiesHandler {
 	
 	private static void testProperties() {
 		Boolean hasChanged = false;
-		
 		
 		String testStr;
 		for (PropertiesEnum prop : PropertiesEnum.values()) {
@@ -85,9 +87,7 @@ public class PropertiesHandler {
 	
 	
 	public static void updateProperties() {
-		File file = new File("bin/config/Logica_config.properties");
-		
-		try (FileWriter writer = new FileWriter(file)) {
+		try (FileWriter writer = new FileWriter(configPath)) {
 			properties.store(writer, null);
 		}
 		catch (IOException e) {
