@@ -1,11 +1,13 @@
 package fr.silvharm.logica.game;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 
+import javax.swing.Box;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -157,12 +159,21 @@ public class Mastermind extends Game {
 		boxMap = new LinkedHashMap<String, Integer>();
 		BoxListener boxListener = new BoxListener();
 		
+		
 		Integer[] tempInt = new Integer[colorPossibleTab.length];
 		for (int i = 0; i < colorPossibleTab.length; i++) {
 			tempInt[i] = colorPossibleTab[i];
 		}
 		
+		
+		Dimension dim = new Dimension(20, 0);
 		for (int i = 0; i < squareSecret; i++) {
+			// add space to separate box in group of 3
+			if (i != 0 && ((squareSecret - i) % 3) == 0) {
+				boxPanel.add(Box.createRigidArea(dim));
+			}
+			
+			
 			JComboBox<Integer> box = new MyJComboBox<Integer>(tempInt);
 			
 			box.setName(Integer.toString(i));

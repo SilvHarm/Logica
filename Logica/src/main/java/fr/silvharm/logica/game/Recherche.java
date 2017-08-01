@@ -1,11 +1,13 @@
 package fr.silvharm.logica.game;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 
+import javax.swing.Box;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -75,11 +77,9 @@ public class Recherche extends Game {
 				
 				ansResult += "-";
 			}
-			
-			if (i != squareSecret - 1) {
-				ansResult += "  ";
-			}
 		}
+		
+		ansResult = moreSpaceResult(ansResult);
 		
 		
 		this.addToHistoric(1);
@@ -116,8 +116,15 @@ public class Recherche extends Game {
 		boxMap = new LinkedHashMap<String, Integer>();
 		BoxListener boxListener = new BoxListener();
 		
+		Dimension dim = new Dimension(20, 0);
 		Integer[] iTab = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 		for (int i = 0; i < squareSecret; i++) {
+			//add space to separate box in group of 3
+			if (i != 0 && ((squareSecret - i) % 3) == 0) {
+				boxPanel.add(Box.createRigidArea(dim));
+			}
+			
+			
 			JComboBox<Integer> box = new MyJComboBox<Integer>(iTab);
 			
 			box.setName(Integer.toString(i));
@@ -133,9 +140,13 @@ public class Recherche extends Game {
 	
 	
 	protected JPanel createAnsSolPanel(String str) {
+		str = moreSpace(str);
+		
 		JPanel panel = new JPanel();
 		
 		JLabel label = new JLabel(str);
+		
+		
 		panel.add(label);
 		
 		return panel;
@@ -146,6 +157,47 @@ public class Recherche extends Game {
 		JPanel boxPanel = createBoxPanel();
 		boxPanel.setAlignmentX(CENTER_ALIGNMENT);
 		gamePanel.add(boxPanel);
+	}
+	
+	
+	// put a space all 3 characters
+	protected String moreSpace(String str) {
+		if (str.length() > 3) {
+			String[] strTab = str.split("");
+			str = "";
+			
+			for (int i = strTab.length - 1, j = 0; i >= 0; i--, j++) {
+				if (j == 3) {
+					str = " " + str;
+					
+					j = 0;
+				}
+				
+				str = strTab[i] + str;
+			}
+		}
+		
+		return str;
+	}
+	
+	
+	// put 5 spaces all 3 characters
+	protected String moreSpaceResult(String str) {
+		String[] strTab = str.split("");
+		str = "";
+		
+		for (int i = strTab.length - 1, j = 0; i >= 0; i--, j++) {
+			if (j == 3) {
+				str = strTab[i] + "     " + str;
+				
+				j = 0;
+			}
+			else {
+				str = strTab[i] + "  " + str;
+			}
+		}
+		
+		return str;
 	}
 	
 	
@@ -223,11 +275,10 @@ public class Recherche extends Game {
 					aiMemory[1][i] = value - 1;
 				}
 			}
-			
-			if (i != squareSecret - 1) {
-				ansResult += "  ";
-			}
 		}
+		
+		ansResult = moreSpaceResult(ansResult);
+		
 		
 		this.addToHistoric(0);
 		

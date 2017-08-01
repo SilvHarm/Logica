@@ -88,7 +88,7 @@ public abstract class Game extends JPanel {
 			ansSolPanel = this.createAnsSolPanel(aiAnswer);
 		}
 		
-		resultLabel.setText("Résultat: " + ansResult);
+		resultLabel.setText("Résultat:   " + ansResult);
 		
 		pan.add(label);
 		pan.add(ansSolPanel);
