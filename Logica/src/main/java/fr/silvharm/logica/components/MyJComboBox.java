@@ -21,7 +21,7 @@ public class MyJComboBox<E> extends JComboBox<E> {
 	}
 	
 	
-	private void alterBox() {
+	protected void alterBox() {
 		Component[] comp = this.getComponents();
 		Component removeComponent = null;
 		

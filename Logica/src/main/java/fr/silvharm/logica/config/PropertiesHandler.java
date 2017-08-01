@@ -34,7 +34,7 @@ public class PropertiesHandler {
 	private static void loadProperties() {
 		properties = new Properties();
 		
-		try (InputStream is = PropertiesHandler.class.getResourceAsStream("/config/config.properties")) {
+		try (InputStream is = PropertiesHandler.class.getResourceAsStream("/config/Logica_config.properties")) {
 			if (is != null) {
 				properties.load(is);
 				
@@ -85,10 +85,10 @@ public class PropertiesHandler {
 	
 	
 	public static void updateProperties() {
-		File file = new File("bin/config/config.properties");
+		File file = new File("bin/config/Logica_config.properties");
 		
 		try (FileWriter writer = new FileWriter(file)) {
-			properties.store(writer, "Options");
+			properties.store(writer, null);
 		}
 		catch (IOException e) {
 			e.getMessage();

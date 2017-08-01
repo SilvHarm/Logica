@@ -123,7 +123,7 @@ public abstract class Game extends JPanel {
 		// separator
 		infoPanel.add(new Box.Filler(null, null, new Dimension(Integer.MAX_VALUE, 0)));
 		
-		if (true) {
+		if (Integer.valueOf(PropertiesHandler.getProperties().getProperty(PropertiesEnum.CHEATMODE.getKeyName())) == 1) {
 			JLabel solLabel = new JLabel("Solution: ");
 			infoPanel.add(solLabel);
 			
@@ -306,7 +306,7 @@ public abstract class Game extends JPanel {
 	class BackListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent arg0) {
-			if (timer != null && timer.isRunning())	{
+			if (timer != null && timer.isRunning()) {
 				timer.stop();
 			}
 			

@@ -19,9 +19,9 @@ import fr.silvharm.logica.config.PropertiesHandler;
 
 public class Recherche extends Game {
 	
-	private Boolean luckyAI;
+	protected Boolean luckyAI;
 	protected int[][] aiMemory;
-	private Map<String, Integer> boxMap;
+	protected Map<String, Integer> boxMap;
 	
 	
 	public Recherche() {
