@@ -99,7 +99,6 @@ public class Mastermind extends Game {
 		}
 		
 		
-		System.out.println(presentCounter[0] + " " + presentCounter[1]);
 		ansResult = "";
 		
 		if (presentCounter[1] == 0) {

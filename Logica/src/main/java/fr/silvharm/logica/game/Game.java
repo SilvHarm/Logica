@@ -306,6 +306,12 @@ public abstract class Game extends JPanel {
 	class BackListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent arg0) {
+			if (timer != null && timer.isRunning())	{
+				timer.stop();
+			}
+			
+			verifyBut.setVisible(true);
+			
 			MainWindow.getMainWindow().setView(new GameConfigPanel());
 		}
 	}
