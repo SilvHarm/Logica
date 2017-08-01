@@ -26,7 +26,6 @@ public abstract class Game extends JPanel {
 	protected Byte squareSecret, triesNumber, triesRemaining;
 	protected int endCode;
 	protected int[] solutionTab;
-	protected int[][] aiMemory;
 	protected JButton verifyBut;
 	protected JLabel triesRemLabel;
 	protected JPanel gamePanel, historyPanel, infoPanel;
@@ -35,6 +34,9 @@ public abstract class Game extends JPanel {
 	
 	
 	protected Game() {
+		this.setGame();
+		
+		
 		BorderLayout layout = new BorderLayout();
 		this.setLayout(layout);
 		
@@ -232,7 +234,6 @@ public abstract class Game extends JPanel {
 			triesRemaining = triesNumber;
 		}
 		
-		aiMemory = new int[2][squareSecret];
 		solutionTab = new int[squareSecret];
 	}
 	

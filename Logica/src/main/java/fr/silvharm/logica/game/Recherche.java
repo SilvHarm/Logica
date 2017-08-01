@@ -18,12 +18,11 @@ import fr.silvharm.logica.config.PropertiesHandler;
 public class Recherche extends Game {
 	
 	private Boolean luckyAI;
+	protected int[][] aiMemory;
 	private Map<String, Integer> boxMap;
 	
 	
 	public Recherche() {
-		this.setGame();
-		
 		this.name = "Recherche";
 	}
 	
@@ -90,7 +89,7 @@ public class Recherche extends Game {
 	
 	
 	public JPanel askPlayerSecret() {
-		this.squareSecret = Byte
+		squareSecret = Byte
 				.valueOf(PropertiesHandler.getProperties().getProperty(PropertiesEnum.SQUARESECRET.getKeyName()));
 		
 		return createBoxPanel();
@@ -153,6 +152,8 @@ public class Recherche extends Game {
 	protected void updateGameConfig() {
 		super.updateGameConfig();
 		
+		aiMemory = new int[2][squareSecret];
+		
 		// if gameMode isn't "CHALLENGER"
 		if (!PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
 				.equals(GameModeEnum.CHALLENGER.getId())) {
@@ -163,7 +164,7 @@ public class Recherche extends Game {
 			}
 			
 			
-			//AI will play logically except if it's feel lucky
+			// AI will play logically except if it's feel lucky
 			luckyAI = false;
 			if (new Random().nextInt(10) < 4) {
 				luckyAI = true;
