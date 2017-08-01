@@ -119,7 +119,7 @@ public class Recherche extends Game {
 		Dimension dim = new Dimension(20, 0);
 		Integer[] iTab = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 		for (int i = 0; i < squareSecret; i++) {
-			//add space to separate box in group of 3
+			// add space to separate box in group of 3
 			if (i != 0 && ((squareSecret - i) % 3) == 0) {
 				boxPanel.add(Box.createRigidArea(dim));
 			}

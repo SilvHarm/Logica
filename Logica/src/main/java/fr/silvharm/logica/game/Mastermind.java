@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.swing.Box;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import fr.silvharm.logica.MainWindow;
@@ -208,12 +207,6 @@ public class Mastermind extends Game {
 	}
 	
 	
-	protected Color findColor(int i) {
-		
-		return null;
-	}
-	
-	
 	protected void initGamePanel() {
 		JPanel boxPanel = createButPanel();
 		gamePanel.add(boxPanel);
@@ -263,7 +256,7 @@ public class Mastermind extends Game {
 		else {
 			i += modifier;
 		}
-		System.out.println(i);
+		
 		button.setTabId(i);
 		
 		button.setBackground(colorTab[i].getColor());

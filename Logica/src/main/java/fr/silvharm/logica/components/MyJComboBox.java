@@ -4,7 +4,6 @@ import java.awt.Component;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.plaf.basic.BasicComboBoxUI;
 
 
 public class MyJComboBox<E> extends JComboBox<E> {

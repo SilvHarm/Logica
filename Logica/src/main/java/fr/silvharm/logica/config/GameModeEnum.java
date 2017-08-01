@@ -14,7 +14,8 @@ public enum GameModeEnum {
 		this.name = nameG;
 	}
 	
-	public String toString()	{
+	
+	public String toString() {
 		return this.name;
 	}
 	
