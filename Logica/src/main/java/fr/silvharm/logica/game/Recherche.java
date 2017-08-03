@@ -41,10 +41,6 @@ public class Recherche extends Game {
 				
 				ansResult += "=";
 				
-				if (i != squareSecret - 1) {
-					ansResult += "  ";
-				}
-				
 				continue;
 			}
 			

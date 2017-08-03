@@ -1,6 +1,7 @@
 package fr.silvharm.logica.game;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ import fr.silvharm.logica.config.PropertiesHandler;
 
 public abstract class Game extends JPanel {
 	
+	private static Boolean cheat = false;
 	private static Game game;
 	
 	protected Byte squareSecret, triesNumber, triesRemaining;
@@ -79,11 +81,13 @@ public abstract class Game extends JPanel {
 		
 		if (who == 0) {
 			label.setText("Vous avez proposé:");
+			label.setForeground(Color.GRAY);
 			
 			ansSolPanel = this.createAnsSolPanel(playerAnswer);
 		}
 		else {
 			label.setText("L'IA a proposé:");
+			label.setForeground(Color.RED);
 			
 			ansSolPanel = this.createAnsSolPanel(aiAnswer);
 		}
@@ -123,7 +127,7 @@ public abstract class Game extends JPanel {
 		// separator
 		infoPanel.add(new Box.Filler(null, null, new Dimension(Integer.MAX_VALUE, 0)));
 		
-		if (Integer.valueOf(PropertiesHandler.getProperties().getProperty(PropertiesEnum.CHEATMODE.getKeyName())) == 1) {
+		if (cheat) {
 			JLabel solLabel = new JLabel("Solution: ");
 			infoPanel.add(solLabel);
 			
@@ -200,6 +204,11 @@ public abstract class Game extends JPanel {
 	}
 	
 	
+	public static void setCheat(Boolean b) {
+		cheat = b;
+	}
+	
+	
 	protected void startGame() {
 		MainWindow.getMainWindow().setView(this);
 		
@@ -232,6 +241,10 @@ public abstract class Game extends JPanel {
 		}
 		else {
 			triesRemaining = triesNumber;
+		}
+		
+		if (Integer.valueOf(PropertiesHandler.getProperties().getProperty(PropertiesEnum.CHEATMODE.getKeyName())) == 1) {
+			cheat = true;
 		}
 		
 		solutionTab = new int[squareSecret];
@@ -341,12 +354,12 @@ public abstract class Game extends JPanel {
 	/**********************
 	 * Setters
 	 **********************/
-	protected void setGame() {
+	public void setGame() {
 		game = this;
 	}
 	
 	
-	protected void setTriesRemLabel() {
+	public void setTriesRemLabel() {
 		triesRemLabel.setText("Essais restants: " + triesRemaining);
 	}
 	
