@@ -9,7 +9,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import fr.silvharm.logica.MainWindow;
+import fr.silvharm.logica.components.MainWindow;
 import fr.silvharm.logica.config.GameConfigPanel;
 
 public class GamesPanel extends JPanel {

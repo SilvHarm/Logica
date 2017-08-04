@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.Timer;
 
-import fr.silvharm.logica.MainWindow;
+import fr.silvharm.logica.components.MainWindow;
 import fr.silvharm.logica.config.GameConfigPanel;
 import fr.silvharm.logica.config.GameModeEnum;
 import fr.silvharm.logica.config.PropertiesEnum;

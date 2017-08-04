@@ -1,5 +1,6 @@
 package fr.silvharm.logica;
 
+import fr.silvharm.logica.components.MainWindow;
 import fr.silvharm.logica.game.Game;
 
 public class Main {

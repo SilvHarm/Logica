@@ -14,8 +14,8 @@ import java.util.Random;
 import javax.swing.Box;
 import javax.swing.JPanel;
 
-import fr.silvharm.logica.MainWindow;
 import fr.silvharm.logica.components.ColorButton;
+import fr.silvharm.logica.components.MainWindow;
 import fr.silvharm.logica.config.ColorEnum;
 import fr.silvharm.logica.config.GameModeEnum;
 import fr.silvharm.logica.config.PropertiesEnum;
