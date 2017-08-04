@@ -15,6 +15,11 @@ public enum GameModeEnum {
 	}
 	
 	
+	public String toString() {
+		return this.name;
+	}
+	
+	
 	/*******************************
 	 * Getters
 	 *******************************/

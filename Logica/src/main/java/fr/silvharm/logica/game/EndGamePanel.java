@@ -61,7 +61,7 @@ public class EndGamePanel extends JPanel {
 		switch (game.endCode) {
 			// Player win
 			case 0:
-				str += "Vous avez gagné.";
+				str += "Vous avez gagnÃ©.";
 				break;
 			// Player lose
 			case 1:
@@ -69,8 +69,8 @@ public class EndGamePanel extends JPanel {
 				break;
 			// AI win
 			case 2:
-				str += "L'IA a gagné !";
-				str2 += "Ce résultat était une évidence !";
+				str += "L'IA a gagnÃ© !";
+				str2 += "Ce rÃ©sultat Ã©tait une Ã©vidence !";
 				break;
 			// AI lose
 			case 3:
@@ -79,13 +79,13 @@ public class EndGamePanel extends JPanel {
 				break;
 			// Player and AI wins
 			case 4:
-				str += "Vous et l'IA avez tout deux gagnés !";
+				str += "Vous et l'IA avez tout deux gagnÃ©s !";
 				str2 += "C'est normal venant d'elle, mais vous ?!";
 				break;
 			// Player and AI loses
 			case 5:
 				str += "Vous et l'IA avez tout deux perdus !";
-				str2 += "Arrêtez de la déconcentrer !";
+				str2 += "ArrÃªtez de la dÃ©concentrer !";
 				break;
 		}
 		
@@ -134,13 +134,13 @@ public class EndGamePanel extends JPanel {
 		// if win
 		if (game.endCode % 2 == 0) {
 			if (game.triesRemaining == -2) {
-				str += "1 essai aura été nécessaire !";
+				str += "1 essai aura Ã©tÃ© nÃ©cessaire !";
 			}
 			else if (game.triesRemaining < 0) {
-				str += (-game.triesRemaining - 1) + " essais auront été nécessaires.";
+				str += (-game.triesRemaining - 1) + " essais auront Ã©tÃ© nÃ©cessaires.";
 			}
 			else if (game.triesRemaining == 0) {
-				str += "C'était le denier essai sur " + game.triesNumber + ".";
+				str += "C'Ã©tait le denier essai sur " + game.triesNumber + ".";
 			}
 			else if (game.triesRemaining >= 0) {
 				str += "Il restait " + game.triesRemaining + "/" + game.triesNumber + " essais.";
@@ -148,10 +148,10 @@ public class EndGamePanel extends JPanel {
 		}
 		else {
 			if (game.triesNumber == 1) {
-				str += "Un seul essai était permis";
+				str += "Un seul essai Ã©tait permis";
 			}
 			else {
-				str += game.triesNumber + " essais étaient permis";
+				str += game.triesNumber + " essais Ã©taient permis";
 			}
 		}
 		

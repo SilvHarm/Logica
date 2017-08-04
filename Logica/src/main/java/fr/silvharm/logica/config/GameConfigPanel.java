@@ -59,7 +59,7 @@ public class GameConfigPanel extends JPanel {
 	private JPanel addButtons() {
 		JPanel buttons = new JPanel();
 		
-		JButton start = new JButton("Commencer à jouer");
+		JButton start = new JButton("Commencer Ã  jouer");
 		start.addActionListener(new LaunchGameListener());
 		buttons.add(start);
 		

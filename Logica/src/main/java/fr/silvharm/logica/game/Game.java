@@ -1,6 +1,7 @@
 package fr.silvharm.logica.game;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,12 +22,12 @@ import fr.silvharm.logica.config.PropertiesHandler;
 
 public abstract class Game extends JPanel {
 	
+	private static Boolean cheat = false;
 	private static Game game;
 	
 	protected Byte squareSecret, triesNumber, triesRemaining;
 	protected int endCode;
 	protected int[] solutionTab;
-	protected int[][] aiMemory;
 	protected JButton verifyBut;
 	protected JLabel triesRemLabel;
 	protected JPanel gamePanel, historyPanel, infoPanel;
@@ -35,6 +36,9 @@ public abstract class Game extends JPanel {
 	
 	
 	protected Game() {
+		this.setGame();
+		
+		
 		BorderLayout layout = new BorderLayout();
 		this.setLayout(layout);
 		
@@ -77,16 +81,18 @@ public abstract class Game extends JPanel {
 		
 		if (who == 0) {
 			label.setText("Vous avez proposé:");
+			label.setForeground(Color.GRAY);
 			
 			ansSolPanel = this.createAnsSolPanel(playerAnswer);
 		}
 		else {
 			label.setText("L'IA a proposé:");
+			label.setForeground(Color.RED);
 			
 			ansSolPanel = this.createAnsSolPanel(aiAnswer);
 		}
 		
-		resultLabel.setText("Résultat: " + ansResult);
+		resultLabel.setText("Résultat:   " + ansResult);
 		
 		pan.add(label);
 		pan.add(ansSolPanel);
@@ -121,7 +127,7 @@ public abstract class Game extends JPanel {
 		// separator
 		infoPanel.add(new Box.Filler(null, null, new Dimension(Integer.MAX_VALUE, 0)));
 		
-		if (true) {
+		if (cheat) {
 			JLabel solLabel = new JLabel("Solution: ");
 			infoPanel.add(solLabel);
 			
@@ -198,6 +204,11 @@ public abstract class Game extends JPanel {
 	}
 	
 	
+	public static void setCheat(Boolean b) {
+		cheat = b;
+	}
+	
+	
 	protected void startGame() {
 		MainWindow.getMainWindow().setView(this);
 		
@@ -232,7 +243,10 @@ public abstract class Game extends JPanel {
 			triesRemaining = triesNumber;
 		}
 		
-		aiMemory = new int[2][squareSecret];
+		if (Integer.valueOf(PropertiesHandler.getProperties().getProperty(PropertiesEnum.CHEATMODE.getKeyName())) == 1) {
+			cheat = true;
+		}
+		
 		solutionTab = new int[squareSecret];
 	}
 	
@@ -250,13 +264,15 @@ public abstract class Game extends JPanel {
 		verifyBut.setVisible(false);
 		
 		
-		timer = new Timer(2000, new ActionListener() {
+		timer = new Timer(1500, new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				if (endCode == -1) {
+					game.aiTurn();
+					
 					game.updateTriesRemaining();
 					
-					game.aiTurn();
+					game.isFinish();
 				}
 				else {
 					timer.stop();
@@ -267,9 +283,9 @@ public abstract class Game extends JPanel {
 		});
 		
 		
-		game.updateTriesRemaining();
-		
 		game.aiTurn();
+		
+		game.updateTriesRemaining();
 		
 		
 		if (endCode == -1) {
@@ -305,6 +321,12 @@ public abstract class Game extends JPanel {
 	class BackListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent arg0) {
+			if (timer != null && timer.isRunning()) {
+				timer.stop();
+			}
+			
+			verifyBut.setVisible(true);
+			
 			MainWindow.getMainWindow().setView(new GameConfigPanel());
 		}
 	}
@@ -334,12 +356,12 @@ public abstract class Game extends JPanel {
 	/**********************
 	 * Setters
 	 **********************/
-	protected void setGame() {
+	public void setGame() {
 		game = this;
 	}
 	
 	
-	protected void setTriesRemLabel() {
+	public void setTriesRemLabel() {
 		triesRemLabel.setText("Essais restants: " + triesRemaining);
 	}
 	

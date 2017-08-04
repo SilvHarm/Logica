@@ -1,6 +1,7 @@
 package fr.silvharm.logica.config;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,9 +11,11 @@ public class PropertiesHandler {
 	
 	private static Properties properties;
 	
+	private static String configPath = "config.properties";
+	
 	
 	private static void createProperties() {
-		Properties properties = new Properties();
+		properties = new Properties();
 		
 		for (PropertiesEnum prop : PropertiesEnum.values()) {
 			properties.setProperty(prop.getKeyName(), prop.getDefaultValue());
@@ -24,37 +27,42 @@ public class PropertiesHandler {
 	
 	public static Properties getProperties() {
 		if (properties == null) {
-			loadProperties();
+			loadProperties(false);
 		}
 		
 		return properties;
 	}
 	
 	
-	private static void loadProperties() {
-		properties = new Properties();
-		
-		try (InputStream is = PropertiesHandler.class.getResourceAsStream("/config/config.properties")) {
-			if (is != null) {
+	// try loading the config file created by the program or just go with the default ones
+	private static void loadProperties(boolean alreadyTried) {
+		if (!new File(configPath).exists()) {
+			// in case the program don't have writing access
+			if (alreadyTried) {
+				return;
+			}
+			
+			createProperties();
+			
+			loadProperties(true);
+		}
+		else	{
+			try (InputStream is = new FileInputStream(configPath)) {
+				properties = new Properties();
+				
 				properties.load(is);
 				
 				testProperties();
 			}
-			else {
-				createProperties();
-				
-				loadProperties();
+			catch (IOException e) {
+				e.getMessage();
 			}
-		}
-		catch (IOException e) {
-			e.getMessage();
 		}
 	}
 	
 	
 	private static void testProperties() {
 		Boolean hasChanged = false;
-		
 		
 		String testStr;
 		for (PropertiesEnum prop : PropertiesEnum.values()) {
@@ -85,10 +93,8 @@ public class PropertiesHandler {
 	
 	
 	public static void updateProperties() {
-		File file = new File("bin/config/config.properties");
-		
-		try (FileWriter writer = new FileWriter(file)) {
-			properties.store(writer, "Options");
+		try (FileWriter writer = new FileWriter(configPath)) {
+			properties.store(writer, null);
 		}
 		catch (IOException e) {
 			e.getMessage();

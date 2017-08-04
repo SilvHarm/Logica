@@ -2,6 +2,7 @@ package fr.silvharm.logica.config;
 
 
 public enum PropertiesEnum {
+	CHEATMODE("cheatMode", "0"),
 	COLORNUMBER("colorNumber", "4"),
 	GAMEMODE("gameMode", GameModeEnum.CHALLENGER.getId()),
 	SQUARESECRET("squareSecret", "5"),
