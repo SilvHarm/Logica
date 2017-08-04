@@ -1,4 +1,4 @@
-package fr.silvharm.logica.config;
+﻿package fr.silvharm.logica.config;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,20 +27,41 @@ public class PropertiesHandler {
 	
 	public static Properties getProperties() {
 		if (properties == null) {
-			loadProperties();
+			loadProperties(false);
 		}
 		
 		return properties;
 	}
 	
 	
-	private static void loadProperties() {
+	// load the config stored in resources but who is not writable
+	private static void loadBackuptProperties() {
+		try (InputStream is = PropertiesHandler.class.getResourceAsStream("/config/config.properties")) {
+			properties.load(is);
+			
+			testProperties();
+		}
+		catch (IOException e) {
+			e.getMessage();
+		}
+	}
+	
+	
+	// try loading the config created by the program
+	private static void loadProperties(boolean alreadyTried) {
 		properties = new Properties();
 		
 		if (!new File(configPath).exists()) {
+			// in case the program don't have writing access
+			if (alreadyTried) {
+				loadBackuptProperties();
+				
+				return;
+			}
+			
 			createProperties();
 			
-			loadProperties();
+			loadProperties(true);
 		}
 		
 		

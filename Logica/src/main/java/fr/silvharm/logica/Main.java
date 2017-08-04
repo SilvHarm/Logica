@@ -1,4 +1,4 @@
-package fr.silvharm.logica;
+﻿package fr.silvharm.logica;
 
 import fr.silvharm.logica.game.Game;
 

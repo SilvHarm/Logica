@@ -1,4 +1,4 @@
-package fr.silvharm.logica.config;
+﻿package fr.silvharm.logica.config;
 
 
 public enum PropertiesEnum {

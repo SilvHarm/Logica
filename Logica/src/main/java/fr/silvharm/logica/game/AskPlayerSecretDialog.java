@@ -1,4 +1,4 @@
-package fr.silvharm.logica.game;
+﻿package fr.silvharm.logica.game;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -18,7 +18,7 @@ public class AskPlayerSecretDialog extends JDialog {
 		dialog = this;
 		
 		this.setTitle("Quel est votre combinaison ?");
-		this.setSize(400, 120);
+		this.setSize(450, 120);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		

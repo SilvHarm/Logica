@@ -1,4 +1,4 @@
-package fr.silvharm.logica.game;
+﻿package fr.silvharm.logica.game;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -264,13 +264,15 @@ public abstract class Game extends JPanel {
 		verifyBut.setVisible(false);
 		
 		
-		timer = new Timer(2000, new ActionListener() {
+		timer = new Timer(1500, new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				if (endCode == -1) {
+					game.aiTurn();
+					
 					game.updateTriesRemaining();
 					
-					game.aiTurn();
+					game.isFinish();
 				}
 				else {
 					timer.stop();
@@ -281,9 +283,9 @@ public abstract class Game extends JPanel {
 		});
 		
 		
-		game.updateTriesRemaining();
-		
 		game.aiTurn();
+		
+		game.updateTriesRemaining();
 		
 		
 		if (endCode == -1) {

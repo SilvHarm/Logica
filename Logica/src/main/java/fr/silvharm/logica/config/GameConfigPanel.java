@@ -1,4 +1,4 @@
-package fr.silvharm.logica.config;
+﻿package fr.silvharm.logica.config;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -59,7 +59,7 @@ public class GameConfigPanel extends JPanel {
 	private JPanel addButtons() {
 		JPanel buttons = new JPanel();
 		
-		JButton start = new JButton("Commencer � jouer");
+		JButton start = new JButton("Commencer à jouer");
 		start.addActionListener(new LaunchGameListener());
 		buttons.add(start);
 		

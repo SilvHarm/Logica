@@ -1,4 +1,4 @@
-package fr.silvharm.logica.config;
+﻿package fr.silvharm.logica.config;
 
 import java.awt.Color;
 
@@ -24,11 +24,6 @@ public enum ColorEnum {
 	}
 	
 	
-	public String toString() {
-		return color.toString();
-	}
-	
-	
 	/*******************************
 	 * Getters
 	 *******************************/
@@ -39,13 +34,5 @@ public enum ColorEnum {
 	
 	public int getId() {
 		return id;
-	}
-	
-	
-	/****************************
-	 * Setters
-	 ****************************/
-	public void setId(int id) {
-		this.id = id;
 	}
 }

@@ -22,8 +22,8 @@
 hs_err_pid*
 
 bin
-/.project
-Logica/.project
-Logica/.classpath
-Logica/.settings
-Logica/config.properties
+*.project
+*.classpath
+.settings
+config.properties
+toIgnore
