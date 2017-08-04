@@ -15,7 +15,7 @@ public class PropertiesHandler {
 	
 	
 	private static void createProperties() {
-		Properties properties = new Properties();
+		properties = new Properties();
 		
 		for (PropertiesEnum prop : PropertiesEnum.values()) {
 			properties.setProperty(prop.getKeyName(), prop.getDefaultValue());
@@ -34,28 +34,11 @@ public class PropertiesHandler {
 	}
 	
 	
-	// load the config stored in resources but who is not writable
-	private static void loadBackuptProperties() {
-		try (InputStream is = PropertiesHandler.class.getResourceAsStream("/config/config.properties")) {
-			properties.load(is);
-			
-			testProperties();
-		}
-		catch (IOException e) {
-			e.getMessage();
-		}
-	}
-	
-	
-	// try loading the config created by the program
+	// try loading the config file created by the program or just go with the default ones
 	private static void loadProperties(boolean alreadyTried) {
-		properties = new Properties();
-		
 		if (!new File(configPath).exists()) {
 			// in case the program don't have writing access
 			if (alreadyTried) {
-				loadBackuptProperties();
-				
 				return;
 			}
 			
@@ -63,15 +46,17 @@ public class PropertiesHandler {
 			
 			loadProperties(true);
 		}
-		
-		
-		try (InputStream is = new FileInputStream(configPath)) {
-			properties.load(is);
-			
-			testProperties();
-		}
-		catch (IOException e) {
-			e.getMessage();
+		else	{
+			try (InputStream is = new FileInputStream(configPath)) {
+				properties = new Properties();
+				
+				properties.load(is);
+				
+				testProperties();
+			}
+			catch (IOException e) {
+				e.getMessage();
+			}
 		}
 	}
 	

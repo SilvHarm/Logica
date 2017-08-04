@@ -25,5 +25,4 @@ bin
 *.project
 *.classpath
 .settings
-config.properties
 toIgnore
