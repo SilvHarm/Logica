@@ -11,7 +11,7 @@ ROBOCOPY src\main\resources bin /S
 set path="C:\Program Files\Java\jdk1.8.0_141\bin"
 
 ::compile the sources files and place them into the bin folder
-javac -d bin -sourcepath src\main\java src\main\java\fr\silvharm\logica\Main.java
+javac -d bin -encoding UTF-8 -sourcepath src\main\java src\main\java\fr\silvharm\logica\Main.java
 
 
 cd bin
