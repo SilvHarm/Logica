@@ -404,9 +404,11 @@ public class Mastermind extends Game {
 	class ColorButListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent arg0) {
-			MainWindow.getMainWindow().requestFocus();
+			ColorButton but = (ColorButton) arg0.getSource();
 			
-			nextColor((ColorButton) arg0.getSource(), 1);
+			but.getParent().requestFocus();
+			
+			nextColor(but, 1);
 		}
 	}
 	
