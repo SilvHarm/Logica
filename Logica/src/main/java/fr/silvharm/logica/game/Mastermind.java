@@ -1,4 +1,4 @@
-﻿package fr.silvharm.logica.game;
+package fr.silvharm.logica.game;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -75,7 +75,7 @@ public class Mastermind extends Game {
 				
 				aiColorIndex = 0;
 				aiTabIndex++;
-			}			
+			}
 			// if there is one more well placed color compared to before
 			else if (aiActualCounter[0] > aiPrevCounter[0]) {
 				aiColorIndex = 0;

@@ -1,4 +1,4 @@
-﻿package fr.silvharm.logica.components;
+package fr.silvharm.logica.components;
 
 import javax.swing.JButton;
 

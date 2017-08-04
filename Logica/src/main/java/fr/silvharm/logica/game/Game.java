@@ -1,4 +1,4 @@
-﻿package fr.silvharm.logica.game;
+package fr.silvharm.logica.game;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

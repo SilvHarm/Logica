@@ -1,4 +1,4 @@
-﻿package fr.silvharm.logica.config;
+package fr.silvharm.logica.config;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
