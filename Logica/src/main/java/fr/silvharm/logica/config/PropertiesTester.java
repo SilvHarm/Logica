@@ -11,6 +11,8 @@ public class PropertiesTester {
 	
 	
 	public static void testProperties() {
+		MyLog4j.getLogger().info("Starting properties test");
+		
 		hasChanged = false;
 		
 		properties = PropertiesHandler.getProperties();
@@ -28,8 +30,12 @@ public class PropertiesTester {
 		
 		
 		if (hasChanged) {
+			MyLog4j.getLogger().warn("Properties should be updated");
+			
 			PropertiesHandler.updateProperties();
 		}
+		
+		MyLog4j.getLogger().info("Properties test finished");
 	}
 	
 	

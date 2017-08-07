@@ -17,6 +17,7 @@ import javax.swing.Timer;
 import fr.silvharm.logica.components.MainWindow;
 import fr.silvharm.logica.config.GameConfigPanel;
 import fr.silvharm.logica.config.GameModeEnum;
+import fr.silvharm.logica.config.MyLog4j;
 import fr.silvharm.logica.config.PropertiesEnum;
 import fr.silvharm.logica.config.PropertiesHandler;
 
@@ -140,6 +141,8 @@ public abstract class Game extends JPanel {
 	
 	
 	public static void launchGame() {
+		MyLog4j.getLogger().info("Launching game: " + game.name);
+		
 		game.updateGameConfig();
 		
 		game.gamePanel.removeAll();
@@ -205,6 +208,9 @@ public abstract class Game extends JPanel {
 	
 	
 	protected void startGame() {
+		MyLog4j.getLogger().info("Starting game, solution is: " + solution);
+		
+		
 		MainWindow.getMainWindow().setView(this);
 		
 		

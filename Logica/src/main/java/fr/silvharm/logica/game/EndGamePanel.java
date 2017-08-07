@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import fr.silvharm.logica.components.MainWindow;
 import fr.silvharm.logica.config.GameModeEnum;
+import fr.silvharm.logica.config.MyLog4j;
 import fr.silvharm.logica.config.PropertiesEnum;
 import fr.silvharm.logica.config.PropertiesHandler;
 
@@ -24,6 +25,9 @@ public class EndGamePanel extends JPanel {
 	
 	public EndGamePanel() {
 		game = Game.getGame();
+		
+		MyLog4j.getLogger().info("Game ended");
+		MyLog4j.getLogger().debug("Ending code is: " + game.endCode);
 		
 		BorderLayout layout = new BorderLayout();
 		this.setLayout(layout);
