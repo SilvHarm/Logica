@@ -88,7 +88,7 @@ public class PropertiesHandler {
 	
 	
 	/*******************************
-	 * Getters
+	 * Setters
 	 *******************************/
 	public static void setInternConfig(Boolean b) {
 		internConfig = b;
