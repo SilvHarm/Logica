@@ -2,7 +2,6 @@
 Le 3ème projet du parcours "Développeur d'Application - Java" de OpenClassroom
 
 
-
 Compile
 ==========================
 
@@ -17,7 +16,6 @@ Note: l'utilisation des scripts doit se faire dans un répertoire avec les droit
 Si tout s'est bien passé, un fichier Logica.jar devrait avoir été généré.
 
 
-
 Launch
 ==========================
 
@@ -29,7 +27,6 @@ ex:
 java -jar "Logica.jar" -internconfig -cheat
 
 
-
 Arguments
 ==========================
 
@@ -38,4 +35,3 @@ Arguments
 	
 -internconfig
 	Le programme va utiliser le config.properties interne.
-	
