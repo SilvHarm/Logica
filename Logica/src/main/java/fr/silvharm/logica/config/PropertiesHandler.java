@@ -11,6 +11,7 @@ public class PropertiesHandler {
 	
 	private static Properties properties;
 	
+	private static Boolean internConfig = false;
 	private static String configPath = "config.properties";
 	
 	
@@ -34,9 +35,22 @@ public class PropertiesHandler {
 	}
 	
 	
-	// try loading the config file created by the program or just go with the default ones
+	// try loading the config file created by the program else just go with the
+	// default properties
 	private static void loadProperties(boolean alreadyTried) {
-		if (!new File(configPath).exists()) {
+		if (internConfig) {
+			try (InputStream is = PropertiesHandler.class.getResourceAsStream("/config/config.properties")) {
+				properties = new Properties();
+				
+				properties.load(is);
+				
+				PropertiesTester.testProperties();
+			}
+			catch (IOException e) {
+				e.getMessage();
+			}
+		}
+		else if (!new File(configPath).exists()) {
 			// in case the program don't have writing access
 			if (alreadyTried) {
 				return;
@@ -46,13 +60,13 @@ public class PropertiesHandler {
 			
 			loadProperties(true);
 		}
-		else	{
+		else {
 			try (InputStream is = new FileInputStream(configPath)) {
 				properties = new Properties();
 				
 				properties.load(is);
 				
-				testProperties();
+				PropertiesTester.testProperties();
 			}
 			catch (IOException e) {
 				e.getMessage();
@@ -61,43 +75,22 @@ public class PropertiesHandler {
 	}
 	
 	
-	private static void testProperties() {
-		Boolean hasChanged = false;
-		
-		String testStr;
-		for (PropertiesEnum prop : PropertiesEnum.values()) {
-			testStr = properties.getProperty(prop.getKeyName());
-			
-			if (testStr == null || testStr.length() != prop.getDefaultValue().length()) {
-				properties.setProperty(prop.getKeyName(), prop.getDefaultValue());
-				
-				hasChanged = true;
+	public static void updateProperties() {
+		if (!internConfig) {
+			try (FileWriter writer = new FileWriter(configPath)) {
+				properties.store(writer, null);
 			}
-			else {
-				try {
-					Integer.valueOf(testStr);
-				}
-				catch (NumberFormatException e) {
-					properties.setProperty(prop.getKeyName(), prop.getDefaultValue());
-					
-					hasChanged = true;
-				}
+			catch (IOException e) {
+				e.getMessage();
 			}
-		}
-		
-		
-		if (hasChanged) {
-			updateProperties();
 		}
 	}
 	
 	
-	public static void updateProperties() {
-		try (FileWriter writer = new FileWriter(configPath)) {
-			properties.store(writer, null);
-		}
-		catch (IOException e) {
-			e.getMessage();
-		}
+	/*******************************
+	 * Getters
+	 *******************************/
+	public static void setInternConfig(Boolean b) {
+		internConfig = b;
 	}
 }

@@ -204,11 +204,6 @@ public abstract class Game extends JPanel {
 	}
 	
 	
-	public static void setCheat(Boolean b) {
-		cheat = b;
-	}
-	
-	
 	protected void startGame() {
 		MainWindow.getMainWindow().setView(this);
 		
@@ -356,6 +351,11 @@ public abstract class Game extends JPanel {
 	/**********************
 	 * Setters
 	 **********************/
+	public static void setCheat(Boolean b) {
+		cheat = b;
+	}
+	
+	
 	public void setGame() {
 		game = this;
 	}

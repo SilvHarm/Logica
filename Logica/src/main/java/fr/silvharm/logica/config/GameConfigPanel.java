@@ -158,11 +158,11 @@ public class GameConfigPanel extends JPanel {
 		trieBox02 = new MyJComboBox<Character>(new Character[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
 		trieBox02.addActionListener(new TrieListener());
 		
-		if (trieStr.length == 1)	{
+		if (trieStr.length == 1) {
 			trieBox01.setSelectedIndex(0);
 			trieBox02.setSelectedIndex(Integer.valueOf(trieStr[0]));
 		}
-		else	{
+		else {
 			trieBox01.setSelectedIndex(Integer.valueOf(trieStr[0]));
 			trieBox02.setSelectedIndex(Integer.valueOf(trieStr[1]));
 		}
