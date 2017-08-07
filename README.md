@@ -2,6 +2,7 @@
 Le 3ème projet du parcours "Développeur d'Application - Java" de OpenClassroom
 
 
+
 Compile
 ==========================
 
@@ -16,15 +17,17 @@ Note: l'utilisation des scripts doit se faire dans un répertoire avec les droit
 Si tout s'est bien passé, un fichier Logica.jar devrait avoir été généré.
 
 
+
 Launch
 ==========================
 
-Avant de chercher à exécuter le programme, il faut s'assurer que le .jar et le dossier lib soient tout deux au même niveau.
+Avant de d'exécuter le programme, il faut s'assurer que le .jar et le dossier lib soient tout deux au même niveau.
 
-Pour lancer le programme, voux pouvez soit l'exécuter directement avec java, soit utiliser un .bat ou .sh afin de passer des arguments au programme.
+Pour lancer le programme, voux pouvez soit l'exécuter directement avec java après lui avoir donné la permission de le faire (si il ne l'a pas), soit utiliser un .bat ou .sh afin de passer des arguments au programme.
 
 ex:
 java -jar "Logica.jar" -internconfig -cheat
+
 
 
 Arguments
@@ -35,3 +38,4 @@ Arguments
 	
 -internconfig
 	Le programme va utiliser le config.properties interne.
+	

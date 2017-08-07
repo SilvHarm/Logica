@@ -9,7 +9,7 @@ cp -r src/main/resources/* bin
 
 
 #compile the sources files and place them into the bin folder
-javac -d bin -sourcepath src/main/java src/main/java/fr/silvharm/logica/Main.java
+javac -d bin -cp lib/log4j2/log4j-1.2-api-2.8.2.jar:log4j-core-2.8.2.jar:log4j-api-2.8.2.jar -sourcepath src/main/java src/main/java/fr/silvharm/logica/Main.java
 
 
 cd bin
