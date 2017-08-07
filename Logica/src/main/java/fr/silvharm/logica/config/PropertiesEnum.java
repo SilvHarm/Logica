@@ -6,7 +6,7 @@ public enum PropertiesEnum {
 	COLORNUMBER("colorNumber", "4"),
 	GAMEMODE("gameMode", GameModeEnum.CHALLENGER.getId()),
 	SQUARESECRET("squareSecret", "5"),
-	TRIESNUMBER("triesNumber", "08");
+	TRIESNUMBER("triesNumber", "8");
 	
 	private String defaultValue, keyName;
 	

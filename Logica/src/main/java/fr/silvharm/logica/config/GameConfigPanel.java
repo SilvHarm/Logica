@@ -153,12 +153,19 @@ public class GameConfigPanel extends JPanel {
 		String[] trieStr = properties.getProperty(PropertiesEnum.TRIESNUMBER.getKeyName()).split("");
 		
 		trieBox01 = new MyJComboBox<Character>(new Character[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
-		trieBox01.setSelectedIndex(Integer.valueOf(trieStr[0]));
 		trieBox01.addActionListener(new TrieListener());
 		
 		trieBox02 = new MyJComboBox<Character>(new Character[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
-		trieBox02.setSelectedIndex(Integer.valueOf(trieStr[1]));
 		trieBox02.addActionListener(new TrieListener());
+		
+		if (trieStr.length == 1)	{
+			trieBox01.setSelectedIndex(0);
+			trieBox02.setSelectedIndex(Integer.valueOf(trieStr[0]));
+		}
+		else	{
+			trieBox01.setSelectedIndex(Integer.valueOf(trieStr[0]));
+			trieBox02.setSelectedIndex(Integer.valueOf(trieStr[1]));
+		}
 		
 		triesP.add(trieBox01);
 		triesP.add(trieBox02);
