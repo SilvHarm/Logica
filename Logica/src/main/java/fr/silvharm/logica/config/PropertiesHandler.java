@@ -28,6 +28,8 @@ public class PropertiesHandler {
 	
 	public static Properties getProperties() {
 		if (properties == null) {
+			MyLog4j.getLogger().info("Loading Properties");
+			
 			loadProperties(false);
 		}
 		
@@ -77,6 +79,8 @@ public class PropertiesHandler {
 	
 	public static void updateProperties() {
 		if (!internConfig) {
+			MyLog4j.getLogger().info("Updating config.properties");
+			
 			try (FileWriter writer = new FileWriter(configPath)) {
 				properties.store(writer, null);
 			}
