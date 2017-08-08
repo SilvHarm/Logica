@@ -269,6 +269,7 @@ public class Mastermind extends Game {
 			
 			button.setName(Integer.toString(i));
 			button.setBackground(colorTab[0].getColor());
+			button.setOpaque(true);
 			
 			button.addActionListener(colorListener);
 			button.addMouseWheelListener(colorWheelListener);
