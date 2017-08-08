@@ -243,8 +243,14 @@ public class GameConfigPanel extends JPanel {
 			caseBox.setSelectedIndex(Integer.valueOf(PropertiesEnum.SQUARESECRET.getDefaultValue()) - 1);
 			
 			String[] trieStr = PropertiesEnum.TRIESNUMBER.getDefaultValue().split("");
-			trieBox01.setSelectedIndex(Integer.valueOf(trieStr[0]));
-			trieBox02.setSelectedIndex(Integer.valueOf(trieStr[1]));
+			if (trieStr.length == 1) {
+				trieBox01.setSelectedIndex(0);
+				trieBox02.setSelectedIndex(Integer.valueOf(trieStr[0]));
+			}
+			else {
+				trieBox01.setSelectedIndex(Integer.valueOf(trieStr[0]));
+				trieBox02.setSelectedIndex(Integer.valueOf(trieStr[1]));
+			}
 			
 			if (Game.getGame().getName().equals("Mastermind")) {
 				masC.setSelectedIndex(Byte.valueOf(PropertiesEnum.COLORNUMBER.getDefaultValue()) - 4);

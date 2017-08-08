@@ -279,7 +279,7 @@ public abstract class Game extends JPanel {
 		verifyBut.setVisible(false);
 		
 		
-		timer = new Timer(1500, new ActionListener() {
+		timer = new Timer(2000, new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				if (endCode == -1) {
