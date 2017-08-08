@@ -1,10 +1,12 @@
 package fr.silvharm.logica.config;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Properties;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,6 +22,7 @@ import fr.silvharm.logica.game.GamesPanel;
 public class GameConfigPanel extends JPanel {
 	
 	private Boolean hasChanged = false;
+	private Dimension dim = new Dimension(Short.MAX_VALUE, 40), dim2 = new Dimension(Short.MAX_VALUE, 50);
 	private JComboBox<Byte> masC;
 	private JComboBox<Character> caseBox, trieBox01, trieBox02;
 	private JComboBox<GameModeEnum> modeBox;
@@ -46,8 +49,12 @@ public class GameConfigPanel extends JPanel {
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.PAGE_AXIS));
 		
+		centerPanel.add(new Box.Filler(new Dimension(0, 5), new Dimension(0, 60), null));
+		
 		centerPanel.add(addModes());
 		centerPanel.add(addOptions());
+		
+		centerPanel.add(new Box.Filler(new Dimension(0, 5), new Dimension(0, 60), null));
 		
 		this.add(centerPanel, BorderLayout.CENTER);
 		
@@ -77,6 +84,7 @@ public class GameConfigPanel extends JPanel {
 	
 	private JPanel addModes() {
 		JPanel modePanel = new JPanel();
+		modePanel.setMaximumSize(dim);
 		
 		JLabel modeLabel = new JLabel("Mode de jeu:");
 		modePanel.add(modeLabel);
@@ -101,6 +109,7 @@ public class GameConfigPanel extends JPanel {
 	
 	private JPanel addMastermind() {
 		JPanel subMastermind = new JPanel();
+		subMastermind.setMaximumSize(dim);
 		
 		JLabel masL = new JLabel("Nombre de couleurs:");
 		subMastermind.add(masL);
@@ -132,6 +141,7 @@ public class GameConfigPanel extends JPanel {
 		
 		
 		JPanel squareSecretP = new JPanel();
+		squareSecretP.setMaximumSize(dim);
 		
 		JLabel squareSecretL = new JLabel("Longueur de la solution:");
 		squareSecretP.add(squareSecretL);
@@ -142,10 +152,12 @@ public class GameConfigPanel extends JPanel {
 		
 		squareSecretP.add(caseBox);
 		
+		options.add(Box.createRigidArea(dim2));
 		options.add(squareSecretP);
 		
 		
 		JPanel triesP = new JPanel();
+		triesP.setMaximumSize(dim);
 		
 		JLabel triesL = new JLabel("Nombre d'essais:");
 		triesP.add(triesL);
@@ -170,10 +182,12 @@ public class GameConfigPanel extends JPanel {
 		triesP.add(trieBox01);
 		triesP.add(trieBox02);
 		
+		options.add(Box.createRigidArea(dim2));
 		options.add(triesP);
 		
 		
 		if (Game.getGame().getName().equals("Mastermind")) {
+			options.add(Box.createRigidArea(dim2));
 			options.add(addMastermind());
 		}
 		

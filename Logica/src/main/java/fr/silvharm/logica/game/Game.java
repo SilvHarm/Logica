@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import fr.silvharm.logica.components.MainWindow;
@@ -27,6 +28,7 @@ public abstract class Game extends JPanel {
 	private static Game game;
 	
 	protected Byte squareSecret, triesNumber, triesRemaining;
+	protected Dimension dim = new Dimension(0, 20);
 	protected int endCode;
 	protected int[] solutionTab;
 	protected JButton verifyBut;
@@ -51,12 +53,16 @@ public abstract class Game extends JPanel {
 		centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
 		
 		gamePanel = new JPanel();
+		gamePanel.setMaximumSize(new Dimension(Short.MAX_VALUE, 70));
 		centerPanel.add(gamePanel);
+		
+		centerPanel.add(Box.createRigidArea(new Dimension(0, 30)));
 		
 		historyPanel = new JPanel();
 		historyPanel.setLayout(new BoxLayout(historyPanel, BoxLayout.Y_AXIS));
 		JScrollPane scrollPane = new JScrollPane(historyPanel);
 		scrollPane.setBorder(null);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		centerPanel.add(scrollPane);
 		
 		this.add(centerPanel, BorderLayout.CENTER);
@@ -80,9 +86,12 @@ public abstract class Game extends JPanel {
 		JLabel label = new JLabel(), resultLabel = new JLabel();
 		JPanel ansSolPanel = new JPanel(), pan = new JPanel();
 		
+		pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
+		pan.setMaximumSize(new Dimension(Short.MAX_VALUE, 70));
+		
 		if (who == 0) {
 			label.setText("Vous avez proposé:");
-			label.setForeground(Color.GRAY);
+			label.setForeground(Color.GREEN);
 			
 			ansSolPanel = this.createAnsSolPanel(playerAnswer);
 		}
@@ -95,11 +104,16 @@ public abstract class Game extends JPanel {
 		
 		resultLabel.setText("Résultat:   " + ansResult);
 		
+		label.setAlignmentX(CENTER_ALIGNMENT);
+		ansSolPanel.setAlignmentX(CENTER_ALIGNMENT);
+		resultLabel.setAlignmentX(CENTER_ALIGNMENT);
+		
 		pan.add(label);
 		pan.add(ansSolPanel);
 		pan.add(resultLabel);
 		
 		historyPanel.add(pan, 0);
+		historyPanel.add(Box.createRigidArea(dim), 0);
 	}
 	
 	

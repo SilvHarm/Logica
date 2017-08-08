@@ -14,7 +14,7 @@ import fr.silvharm.logica.config.GameConfigPanel;
 
 public class GamesPanel extends JPanel {
 	
-	private Dimension dMin = new Dimension(0, 5), dPref = new Dimension(0, 30);
+	private Dimension dim = new Dimension(0, 80), dMin = new Dimension(0, 5), dPref = new Dimension(0, 30);
 	
 	
 	public GamesPanel() {
@@ -34,7 +34,7 @@ public class GamesPanel extends JPanel {
 		this.add(mastermind);
 		
 		
-		this.add(new Box.Filler(dMin, dPref, dPref));
+		this.add(Box.createRigidArea(dim));
 		
 		
 		JButton recherche = new JButton("Recherche");
@@ -44,7 +44,7 @@ public class GamesPanel extends JPanel {
 		this.add(recherche);
 		
 		
-		this.add(new Box.Filler(dMin, dPref, dPref));
+		this.add(Box.createRigidArea(dim));
 		
 		
 		JButton exit = new JButton("Quitter");
