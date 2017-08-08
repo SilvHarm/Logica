@@ -9,7 +9,9 @@ Compile
 Pour compiler, vous pouvez soit utiliser un IDE (et vous débrouillez avec) soit utiliser l'un des scripts fourni pour Windows(.bat) ou Linux(.sh) dans le répertoire Logica, après avoir effectué une manipulation pour le 1er.
 
 Windows:
-	Dans "compile.bat", ligne 11, vous devez modifier le chemin pour que celui ci corresponde au dossier bin de votre jdk.
+	Dans "compile.bat", ligne 12, vous devez modifier le chemin pour que celui ci corresponde au dossier bin de votre jdk.	
+		OU
+	Si le path de votre jdk est déjà set sur votre machine, contentez-vous de commenter la ligne 12 en mettant "::" au début
 
 Note: l'utilisation des scripts doit se faire dans un répertoire avec les droits de lecture/écriture/éxécution.
 

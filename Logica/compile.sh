@@ -14,6 +14,12 @@ javac -d bin -cp lib/log4j2/log4j-1.2-api-2.8.2.jar:log4j-core-2.8.2.jar:log4j-a
 
 cd bin
 
+#moving the config for log4j2 to the right place
+mv config/log4j2/log4j2.xml .
+
+rm -R config/log4j2
+
+
 #create Logica.jar who will contain all the files in the bin directory and have Main has entry point of the jar
 jar cfvm Logica.jar ../manifest.txt *
 
