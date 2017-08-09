@@ -20,6 +20,8 @@ import fr.silvharm.logica.config.PropertiesHandler;
 
 public class EndGamePanel extends JPanel {
 	
+	private Dimension dima = new Dimension(0, 5), dimi = new Dimension(0, 30), dimo = new Dimension(0, 60),
+			dimu = new Dimension(Short.MAX_VALUE, 40);
 	private Game game;
 	
 	
@@ -93,8 +95,8 @@ public class EndGamePanel extends JPanel {
 				break;
 		}
 		
-		// top whithe-space
-		pan.add(new Box.Filler(new Dimension(0, 5), new Dimension(0, 60), null));
+		// top white-space
+		pan.add(new Box.Filler(dima, dimi, null));
 		
 		
 		JLabel winLoseLabel = new JLabel(str);
@@ -107,7 +109,7 @@ public class EndGamePanel extends JPanel {
 		
 		
 		// separator
-		pan.add(new Box.Filler(new Dimension(0, 5), new Dimension(0, 30), new Dimension(0, 30)));
+		pan.add(new Box.Filler(dima, dimi, dimi));
 		
 		
 		JLabel triesLabel = getTriesLabel();
@@ -115,17 +117,45 @@ public class EndGamePanel extends JPanel {
 		pan.add(triesLabel);
 		
 		
-		// separator
-		pan.add(new Box.Filler(new Dimension(0, 5), new Dimension(0, 60), new Dimension(0, 60)));
+		if (!game.solution.equals(" ")) {
+			// separator
+			pan.add(new Box.Filler(dima, dimo, dimo));
+			
+			
+			JLabel solLabel = new JLabel("Solution :");
+			solLabel.setAlignmentX(CENTER_ALIGNMENT);
+			pan.add(solLabel);
+			
+			JPanel solPanel = game.createAnsSolPanel(game.solution);
+			solPanel.setAlignmentX(CENTER_ALIGNMENT);
+			solPanel.setMaximumSize(dimu);
+			pan.add(solPanel);
+		}
 		
 		
-		JLabel solLabel = new JLabel("Solution :");
-		solLabel.setAlignmentX(CENTER_ALIGNMENT);
-		pan.add(solLabel);
+		if (!game.solutionPlayer.equals(" ")) {
+			// separator
+			if (!game.solution.equals(" ")) {
+				pan.add(new Box.Filler(dima, dimi, dimi));
+			}
+			else {
+				pan.add(new Box.Filler(dima, dimo, dimo));
+			}
+			
+			
+			JLabel solPlayLabel = new JLabel("Solution du Joueur :");
+			solPlayLabel.setAlignmentX(CENTER_ALIGNMENT);
+			pan.add(solPlayLabel);
+			
+			JPanel solPlayPanel = game.createAnsSolPanel(game.solutionPlayer);
+			solPlayPanel.setAlignmentX(CENTER_ALIGNMENT);
+			solPlayPanel.setMaximumSize(dimu);
+			pan.add(solPlayPanel);
+		}
 		
-		JPanel solPanel = game.createAnsSolPanel(game.solution);
-		solPanel.setAlignmentX(CENTER_ALIGNMENT);
-		pan.add(solPanel);
+		
+		// bottom white-space
+		pan.add(new Box.Filler(dima, dimi, null));
 		
 		
 		return pan;

@@ -287,7 +287,8 @@ public class GameConfigPanel extends JPanel {
 				hasChanged = false;
 			}
 			
-			if (properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameModeEnum.DEFENSEUR.getId())) {
+			// if game mode isn't challenger
+			if (!properties.getProperty(PropertiesEnum.GAMEMODE.getKeyName()).equals(GameModeEnum.CHALLENGER.getId())) {
 				new AskPlayerSecretDialog();
 			}
 			else {

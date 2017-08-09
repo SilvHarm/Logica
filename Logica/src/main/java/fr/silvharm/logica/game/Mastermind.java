@@ -25,7 +25,7 @@ public class Mastermind extends Game {
 	
 	protected ColorEnum[] colorTab;
 	protected int colorNumber;
-	protected int[] presentCounter, solColorCounter;
+	protected int[] presentCounter, solColorCounter, solPlayColorCounter;
 	protected Map<String, Integer> boxMap;
 	
 	protected int aiColorIndex, aiTabIndex;
@@ -94,7 +94,7 @@ public class Mastermind extends Game {
 			aiAnswer += Integer.toString(i);
 		}
 		
-		this.answerVerification(aiAnswer);
+		this.answerVerification(1, aiAnswer);
 		
 		aiPrevCounter[0] = aiActualCounter[0];
 		aiPrevCounter[1] = aiActualCounter[1];
@@ -106,9 +106,23 @@ public class Mastermind extends Game {
 	}
 	
 	
-	protected void answerVerification(String answer) {
+	protected void answerVerification(int whoPlay, String answer) {
 		presentCounter[0] = 0;
 		presentCounter[1] = 0;
+		
+		
+		int[] whoCounter = null, whoSolTab = null;
+		
+		switch (whoPlay) {
+			case 0:
+				whoCounter = solColorCounter;
+				whoSolTab = solutionTab;
+				break;
+			case 1:
+				whoCounter = solPlayColorCounter;
+				whoSolTab = solutionPlayerTab;
+				break;
+		}
 		
 		
 		int[] answerIntTab = new int[answer.length()];
@@ -122,12 +136,12 @@ public class Mastermind extends Game {
 		int[] tempCounter = colorCounter(answerIntTab);
 		
 		for (int i = 0; i < tempCounter.length; i++) {
-			if (solColorCounter[i] == 0) {
+			if (whoCounter[i] == 0) {
 				tempCounter[i] = 0;
 			}
 			
-			else if (tempCounter[i] > solColorCounter[i]) {
-				tempCounter[i] = solColorCounter[i];
+			else if (tempCounter[i] > whoCounter[i]) {
+				tempCounter[i] = whoCounter[i];
 			}
 			
 			presentCounter[1] += tempCounter[i];
@@ -135,8 +149,8 @@ public class Mastermind extends Game {
 		
 		
 		// count the number of colors well placed
-		for (int i = 0; i < solutionTab.length; i++) {
-			if (answerIntTab[i] == solutionTab[i]) {
+		for (int i = 0; i < whoSolTab.length; i++) {
+			if (answerIntTab[i] == whoSolTab[i]) {
 				presentCounter[0]++;
 			}
 		}
@@ -180,7 +194,12 @@ public class Mastermind extends Game {
 	
 	
 	protected void calculSolution() {
-		this.initColorPossibleTab();
+		// if game mode is "CHALLENGER"
+		if (PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
+				.equals(GameModeEnum.CHALLENGER.getId())) {
+			this.initColorPossibleTab();
+		}
+		
 		
 		Random random = new Random();
 		
@@ -221,18 +240,21 @@ public class Mastermind extends Game {
 		
 		JPanel panel = new JPanel();
 		
-		Dimension dim = new Dimension(20, 0);
+		Dimension dima = new Dimension(10, 0);
 		for (int i = 0; i < squareSecret; i++) {
 			// add space to separate box in group of 3
 			if (i != 0 && ((squareSecret - i) % 3) == 0) {
-				panel.add(Box.createRigidArea(dim));
+				panel.add(Box.createRigidArea(dima));
 			}
 			
 			ColorButton button = new ColorButton();
+			Dimension dimi = new Dimension(10, 10);
 			
 			for (ColorEnum col : colorTab) {
 				if (col.getId() == (cTab[i] - '0')) {
 					button.setBackground(col.getColor());
+					button.setText("");
+					button.setPreferredSize(dimi);
 					
 					button.addActionListener(new ActionListener() {
 						
@@ -245,6 +267,8 @@ public class Mastermind extends Game {
 			
 			panel.add(button);
 		}
+		
+		MainWindow.getMainWindow().requestFocus();
 		
 		return panel;
 	}
@@ -348,6 +372,7 @@ public class Mastermind extends Game {
 				.valueOf(PropertiesHandler.getProperties().getProperty(PropertiesEnum.COLORNUMBER.getKeyName()));
 		
 		solColorCounter = new int[colorNumber];
+		solPlayColorCounter = new int[colorNumber];
 		presentCounter = new int[2];
 		
 		
@@ -357,15 +382,15 @@ public class Mastermind extends Game {
 		aiTabIndex = 0;
 		
 		
-		// if gameMode is "DEFENSEUR"
-		if (PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
-				.equals(GameModeEnum.DEFENSEUR.getId())) {
+		// if gameMode isn't "CHALLENGER"
+		if (!PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
+				.equals(GameModeEnum.CHALLENGER.getId())) {
 			for (int i = 0; i < squareSecret; i++) {
-				solutionTab[i] = boxMap.get(Integer.toString(i));
+				solutionPlayerTab[i] = boxMap.get(Integer.toString(i));
 				
-				solution += solutionTab[i];
+				solutionPlayer += solutionPlayerTab[i];
 				
-				solColorCounter = colorCounter(solutionTab);
+				solPlayColorCounter = colorCounter(solutionPlayerTab);
 			}
 		}
 	}
@@ -389,7 +414,7 @@ public class Mastermind extends Game {
 		}
 		
 		
-		this.answerVerification(playerAnswer);
+		this.answerVerification(0, playerAnswer);
 		
 		this.addToHistoric(0);
 		

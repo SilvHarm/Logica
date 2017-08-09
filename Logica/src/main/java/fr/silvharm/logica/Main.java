@@ -8,6 +8,9 @@ import fr.silvharm.logica.game.Game;
 public class Main {
 	
 	public static void main(String[] args) {
+		// load the properties at the start
+		PropertiesHandler.getProperties();
+		
 		if (args.length > 0) {
 			for (String str : args) {
 				switch (str) {

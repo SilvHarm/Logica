@@ -57,18 +57,18 @@ public class Recherche extends Game {
 			
 			aiAnswer += aiProp;
 			
-			if (aiProp == solutionTab[i]) {
+			if (aiProp == solutionPlayerTab[i]) {
 				aiMemory[0][i] = aiProp;
 				aiMemory[1][i] = aiProp;
 				
 				ansResult += "=";
 			}
-			else if (aiProp < solutionTab[i]) {
+			else if (aiProp < solutionPlayerTab[i]) {
 				aiMemory[0][i] = aiProp + 1;
 				
 				ansResult += "+";
 			}
-			else if (aiProp > solutionTab[i]) {
+			else if (aiProp > solutionPlayerTab[i]) {
 				aiMemory[1][i] = aiProp - 1;
 				
 				ansResult += "-";
@@ -112,6 +112,7 @@ public class Recherche extends Game {
 		
 		Dimension dim = new Dimension(20, 0);
 		Integer[] iTab = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+		
 		for (int i = 0; i < squareSecret; i++) {
 			// add space to separate box in group of 3
 			if (i != 0 && ((squareSecret - i) % 3) == 0) {
@@ -215,16 +216,13 @@ public class Recherche extends Game {
 			if (new Random().nextInt(10) < 4) {
 				luckyAI = true;
 			}
-		}
-		
-		
-		// if gameMode is "DEFENSEUR"
-		if (PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
-				.equals(GameModeEnum.DEFENSEUR.getId())) {
+			
+			
+			// retrieve player secret and put it into solutionPlayer and solutionPlayerTab
 			for (int i = 0; i < squareSecret; i++) {
-				solutionTab[i] = boxMap.get(Integer.toString(i));
+				solutionPlayerTab[i] = boxMap.get(Integer.toString(i));
 				
-				solution += solutionTab[i];
+				solutionPlayer += solutionPlayerTab[i];
 			}
 		}
 	}
@@ -249,25 +247,12 @@ public class Recherche extends Game {
 			
 			if (value == solutionTab[i]) {
 				ansResult += "=";
-				
-				if (aiMemory[0][i] != value || aiMemory[1][i] != value) {
-					aiMemory[0][i] = value;
-					aiMemory[1][i] = value;
-				}
 			}
 			else if (value < solutionTab[i]) {
 				ansResult += "+";
-				
-				if (aiMemory[0][i] <= value) {
-					aiMemory[0][i] = value + 1;
-				}
 			}
 			else if (value > solutionTab[i]) {
 				ansResult += "-";
-				
-				if (aiMemory[1][i] >= value) {
-					aiMemory[1][i] = value - 1;
-				}
 			}
 		}
 		

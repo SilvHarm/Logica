@@ -12,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import fr.silvharm.logica.components.MainWindow;
@@ -30,11 +29,11 @@ public abstract class Game extends JPanel {
 	protected Byte squareSecret, triesNumber, triesRemaining;
 	protected Dimension dim = new Dimension(0, 20);
 	protected int endCode;
-	protected int[] solutionTab;
+	protected int[] solutionTab, solutionPlayerTab;
 	protected JButton verifyBut;
 	protected JLabel triesRemLabel;
 	protected JPanel gamePanel, historyPanel, infoPanel;
-	protected String aiAnswer, ansResult = "", name, playerAnswer, solution;
+	protected String aiAnswer, ansResult = "", name, playerAnswer, solution, solutionPlayer;
 	protected Timer timer;
 	
 	
@@ -143,10 +142,34 @@ public abstract class Game extends JPanel {
 		infoPanel.add(new Box.Filler(null, null, new Dimension(Integer.MAX_VALUE, 0)));
 		
 		if (cheat) {
-			JLabel solLabel = new JLabel("Solution: ");
-			infoPanel.add(solLabel);
+			// if game mode isn't "DEFENSEUR"
+			if (!PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
+					.equals(GameModeEnum.DEFENSEUR.getId())) {
+				
+				JLabel solLabel = new JLabel("Solution: ");
+				infoPanel.add(solLabel);
+				
+				infoPanel.add(this.createAnsSolPanel(solution));
+			}
 			
-			infoPanel.add(this.createAnsSolPanel(solution));
+			
+			// if game mode is "DUEL"
+			if (PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
+					.equals(GameModeEnum.DUEL.getId())) {
+				// separator
+				infoPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+			}
+			
+			
+			// if game mode isn't "CHALLENGER"
+			if (!PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
+					.equals(GameModeEnum.CHALLENGER.getId())) {
+				JLabel solLabel = new JLabel("Solution du Joueur: ");
+				infoPanel.add(solLabel);
+				
+				infoPanel.add(this.createAnsSolPanel(solutionPlayer));
+			}
+			
 			
 			// right white-space
 			infoPanel.add(Box.createRigidArea(new Dimension(5, 0)));
@@ -162,8 +185,8 @@ public abstract class Game extends JPanel {
 		game.gamePanel.removeAll();
 		
 		// if gameMode isn't "DEFENSEUR"
-		if (!(PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
-				.equals(GameModeEnum.DEFENSEUR.getId()))) {
+		if (!PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
+				.equals(GameModeEnum.DEFENSEUR.getId())) {
 			game.calculSolution();
 			
 			game.initGamePanel();
@@ -180,12 +203,12 @@ public abstract class Game extends JPanel {
 	
 	protected void isFinish() {
 		// if Player and AI has win
-		if (playerAnswer.equals(solution) && aiAnswer.equals(solution)) {
+		if (playerAnswer.equals(solution) && aiAnswer.equals(solutionPlayer)) {
 			endCode = 4;
 		}
 		
 		// if AI has win
-		else if (aiAnswer.equals(solution)) {
+		else if (aiAnswer.equals(solutionPlayer)) {
 			endCode = 2;
 		}
 		
@@ -243,6 +266,21 @@ public abstract class Game extends JPanel {
 		ansResult = "";
 		playerAnswer = "";
 		solution = "";
+		solutionPlayer = "";
+		
+		
+		// if gameMode is "CHALLENGER"
+		if (PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
+				.equals(GameModeEnum.CHALLENGER.getId())) {
+			solutionPlayer = " ";
+		}
+		
+		
+		// if gameMode is "DEFENSEUR"
+		if (PropertiesHandler.getProperties().getProperty(PropertiesEnum.GAMEMODE.getKeyName())
+				.equals(GameModeEnum.DEFENSEUR.getId())) {
+			solution = " ";
+		}
 		
 		
 		squareSecret = Byte
@@ -258,11 +296,15 @@ public abstract class Game extends JPanel {
 			triesRemaining = triesNumber;
 		}
 		
+		
+		// if cheatMode is activated in the config
 		if (Integer.valueOf(PropertiesHandler.getProperties().getProperty(PropertiesEnum.CHEATMODE.getKeyName())) == 1) {
 			cheat = true;
 		}
 		
+		
 		solutionTab = new int[squareSecret];
+		solutionPlayerTab = new int[squareSecret];
 	}
 	
 	
