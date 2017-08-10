@@ -14,7 +14,7 @@ import fr.silvharm.logica.config.GameConfigPanel;
 
 public class GamesPanel extends JPanel {
 	
-	private Dimension dim = new Dimension(0, 80), dMin = new Dimension(0, 5), dPref = new Dimension(0, 30);
+	private Dimension dim = new Dimension(0, 80);
 	
 	
 	public GamesPanel() {
